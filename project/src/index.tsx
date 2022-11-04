@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import { PlacesProps } from './pages/places/places';
+import { offers } from './mocks/offers';
+import { OffersProps } from './pages/main-page/main-page';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
-const placesProps: PlacesProps = {
-  placesCount: 5
+const placesProps: OffersProps = {
+  offers: offers
 };
 
 root.render(
