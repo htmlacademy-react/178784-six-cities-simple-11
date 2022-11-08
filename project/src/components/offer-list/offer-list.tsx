@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import OfferItem from '../offer-item/offer-item';
 import { OffersProps } from '../../pages/main-page/main-page';
-import { Offer } from '../../mocks/offers';
+import { Offer } from '../../types/types';
 
 function OfferList({ offers }: OffersProps) {
   const [activeCard, setActiveCard] = useState<Offer | null>(null);

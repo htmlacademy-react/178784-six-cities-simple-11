@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import { offers } from './mocks/offers';
+import { OFFERS } from './mocks/offers';
 import { OffersProps } from './pages/main-page/main-page';
 
 const root = ReactDOM.createRoot(
@@ -9,7 +9,7 @@ const root = ReactDOM.createRoot(
 );
 
 const placesProps: OffersProps = {
-  offers: offers
+  offers: OFFERS
 };
 
 root.render(

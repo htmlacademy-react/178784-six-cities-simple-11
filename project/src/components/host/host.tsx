@@ -1,4 +1,4 @@
-import { WithHostProps } from '../../types/with-host-props.type';
+import { WithHostProps } from '../../types/types';
 
 function Host({ host }: WithHostProps): JSX.Element {
   return (

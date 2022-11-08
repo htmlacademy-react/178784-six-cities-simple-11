@@ -5,7 +5,7 @@ import PropertyGalery from '../../components/property-galery/property-galary';
 import PropertyInside from '../../components/property-inside/property-inside';
 import Rating from '../../components/rating/rating';
 import ReviewForm from '../../components/review-form/review-form';
-import { getOfferById, HotelTypes } from '../../mocks/offers';
+import { getOfferById, HOTEL_TYPES } from '../../mocks/offers';
 
 function RoomPage(): JSX.Element {
   const { id } = useParams();
@@ -53,7 +53,7 @@ function RoomPage(): JSX.Element {
               <Rating rating={offer.rating} isShowValue />
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {HotelTypes[offer.type]}
+                  {HOTEL_TYPES[offer.type]}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
                   {offer.bedrooms} Bedrooms
