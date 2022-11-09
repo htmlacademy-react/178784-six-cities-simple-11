@@ -1,5 +1,7 @@
-import { Offer } from '../../mocks/offers';
 import OfferList from '../../components/offer-list/offer-list';
+import Map from '../../components/map/map';
+import { POINTS } from '../../mocks/points';
+import { Offer } from '../../types/types';
 
 export type OffersProps = {
   offers: Offer[];
@@ -96,7 +98,7 @@ function MainPage(props: OffersProps): JSX.Element {
               <OfferList offers={props.offers}/>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map points={POINTS} />
             </div>
           </div>
         </div>

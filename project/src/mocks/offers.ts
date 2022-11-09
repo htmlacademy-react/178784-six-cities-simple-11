@@ -1,44 +1,10 @@
-export const HotelTypes: { [key: string]: string } = {
+import { Offer } from '../types/types';
+
+export const HOTEL_TYPES: { [key: string]: string } = {
   'apartment': 'Apartment',
   'room': 'Private Room',
   'house': 'House',
   'hotel': 'Hotel'
-};
-
-export type Host = {
-  avatarUrl: string;
-  id: number;
-  isPro: boolean;
-  name: string;
-}
-
-type City = {
-  name: string;
-  location: Location;
-}
-
-type Location = {
-  latitude: number;
-  longitude: number;
-  zoom: number;
-}
-
-export type Offer = {
-  id: number;
-  city: City;
-  title: string;
-  previewImage: string;
-  images: string[];
-  description: string;
-  isPremium: boolean;
-  type: string;
-  rating: number;
-  bedrooms: number;
-  maxAdults: number;
-  price: number;
-  host: Host;
-  goods: string[];
-  location: Location;
 };
 
 const offer1: Offer = {
@@ -270,13 +236,13 @@ export function getOfferById(id: string | undefined): Offer {
   if (!id) {
     throw new Error('Could not get offer by undefind id');
   }
-  const result = offers.find((offer) => offer.id === +id);
+  const result = OFFERS.find((offer) => offer.id === +id);
   if (!result) {
     throw new Error(`Could not get offer by id ${id}`);
   }
   return result;
 }
 
-export const offers: Offer[] = [
+export const OFFERS: Offer[] = [
   offer1, offer2, offer3, offer4
 ];

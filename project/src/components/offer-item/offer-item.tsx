@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { HotelTypes, Offer } from '../../mocks/offers';
+import { HOTEL_TYPES } from '../../mocks/offers';
+import { Offer } from '../../types/types';
 import IsPremium from '../is-premium/is-premium';
 import Rating from '../rating/rating';
 
@@ -31,7 +32,7 @@ function OfferItem({ offer, setActive }: OfferProp): JSX.Element {
         <h2 className="place-card__name">
           <a href="#">{offer.title}</a>
         </h2>
-        <p className="place-card__type">{HotelTypes[offer.type]}</p>
+        <p className="place-card__type">{HOTEL_TYPES[offer.type]}</p>
       </div>
     </article>
   );
