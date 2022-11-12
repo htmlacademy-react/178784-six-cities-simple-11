@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
 import { HOTEL_TYPES } from '../../mocks/offers';
-import { Offer } from '../../types/types';
+import { Nullable, Offer } from '../../types/types';
 import IsPremium from '../is-premium/is-premium';
 import Rating from '../rating/rating';
 
 export type OfferProp = {
   offer: Offer;
-  setActive: (offer: Offer | null) => void;
+  setActive: (offer: Nullable<Offer>) => void;
 }
 
 function OfferItem({ offer, setActive }: OfferProp): JSX.Element {

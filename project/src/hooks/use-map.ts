@@ -1,8 +1,8 @@
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import {Map, TileLayer } from 'leaflet';
-import { City, Nullable } from '../../types/types';
+import { City, Nullable } from '../types/types';
 
-function useMap(mapRef: MutableRefObject<Nullable<HTMLElement>>, city: City) {
+function useMap(mapRef: MutableRefObject<Nullable<HTMLElement>>, city: City) : Nullable<Map> {
   const [map, setMap] = useState<Nullable<Map>>(null);
   const isRenderedRef = useRef(false);
 

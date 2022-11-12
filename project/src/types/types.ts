@@ -6,6 +6,11 @@ export type Location = {
   zoom: number;
 }
 
+export type Point = Omit<Location, 'zoom'> &
+{
+  id: number;
+}
+
 export type City = {
   name: string;
   location: Location;

@@ -1,13 +1,19 @@
 import OfferList from '../../components/offer-list/offer-list';
 import Map from '../../components/map/map';
-import { POINTS } from '../../mocks/points';
-import { Offer } from '../../types/types';
+import { Nullable, Offer } from '../../types/types';
+import { useState } from 'react';
+import { getPoints } from '../../mocks/offers';
 
-export type OffersProps = {
+export type MainProps = {
   offers: Offer[];
 };
 
-function MainPage(props: OffersProps): JSX.Element {
+const points = getPoints();
+
+function MainPage(props: MainProps): JSX.Element {
+
+  const [activeCard, setActiveCard] = useState<Nullable<Offer>>(null);
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -95,10 +101,10 @@ function MainPage(props: OffersProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <OfferList offers={props.offers}/>
+              <OfferList offers={props.offers} setActiveCard={setActiveCard}/>
             </section>
             <div className="cities__right-section">
-              <Map points={POINTS} />
+              <Map points={points} activeId={activeCard?.id}/>
             </div>
           </div>
         </div>
