@@ -1,18 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
 import App from './components/app/app';
-import { OFFERS } from './mocks/offers';
-import { MainProps } from './pages/main-page/main-page';
+import { store } from './store';
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
-const placesProps: MainProps = {
-  offers: OFFERS
-};
 
 root.render(
-  <React.StrictMode>
-    <App {...placesProps}/>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>,
+  </Provider>
 );

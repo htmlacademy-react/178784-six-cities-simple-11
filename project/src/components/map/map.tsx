@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react';
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../constants/const';
-import { CITY } from '../../mocks/city';
 import useMap from '../../hooks/use-map';
 import leaflet, { Icon } from 'leaflet';
 import { Nullable, Point } from '../../types/types';
 import 'leaflet/dist/leaflet.css';
+import { useAppSelector } from '../../hooks';
 
 type MapProps = {
   points: Point[];
@@ -12,8 +12,13 @@ type MapProps = {
 }
 
 function Map({ points, activeId }: MapProps): JSX.Element {
+  const activeCity = useAppSelector((state) => state.city);
+
+  if (activeCity === undefined) {
+    throw new Error('Active city is undefined');
+  }
   const mapRef = useRef<Nullable<HTMLElement>>(null);
-  const map = useMap(mapRef, CITY);
+  const map = useMap(mapRef, activeCity);
 
   const defaultCustomIcon = leaflet.icon({
     iconUrl: URL_MARKER_DEFAULT,
@@ -26,7 +31,6 @@ function Map({ points, activeId }: MapProps): JSX.Element {
     iconSize: [40, 40],
     iconAnchor: [20, 40]
   });
-
 
   useEffect(() => {
     if (map) {

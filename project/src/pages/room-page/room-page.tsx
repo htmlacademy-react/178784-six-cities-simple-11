@@ -50,7 +50,7 @@ function RoomPage(): JSX.Element {
                   {offer.title}
                 </h1>
               </div>
-              <Rating rating={offer.rating} isShowValue />
+              <Rating rating={offer?.rating} isShowValue />
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
                   {HOTEL_TYPES[offer.type]}

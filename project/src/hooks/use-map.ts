@@ -1,10 +1,20 @@
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
-import {Map, TileLayer } from 'leaflet';
+import { Map, TileLayer } from 'leaflet';
 import { City, Nullable } from '../types/types';
+import { useAppSelector } from '.';
 
-function useMap(mapRef: MutableRefObject<Nullable<HTMLElement>>, city: City) : Nullable<Map> {
+function useMap(mapRef: MutableRefObject<Nullable<HTMLElement>>, city: City): Nullable<Map> {
   const [map, setMap] = useState<Nullable<Map>>(null);
   const isRenderedRef = useRef(false);
+
+  useAppSelector((state) => {
+    if (map && state.city) {
+      map.panTo({
+        lat: state.city.location.latitude,
+        lng: state.city.location.longitude
+      });
+    }
+  });
 
   useEffect(() => {
     if (mapRef.current !== null && !isRenderedRef.current) {
