@@ -1,4 +1,4 @@
-import { Offer } from '../types/types';
+import { Offer, Point } from '../types/types';
 
 export const HOTEL_TYPES: { [key: string]: string } = {
   'apartment': 'Apartment',
@@ -246,3 +246,14 @@ export function getOfferById(id: string | undefined): Offer {
 export const OFFERS: Offer[] = [
   offer1, offer2, offer3, offer4
 ];
+
+export function getPoints(): Point[] {
+  return OFFERS.map((offer) => {
+    const point: Point = {
+      latitude: offer.location.latitude,
+      longitude: offer.location.longitude,
+      id: offer.id
+    };
+    return point;
+  });
+}
