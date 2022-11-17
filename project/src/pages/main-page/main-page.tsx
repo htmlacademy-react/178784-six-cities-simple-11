@@ -1,24 +1,29 @@
 import OfferList from '../../components/offer-list/offer-list';
 import Map from '../../components/map/map';
-import { Nullable, Offer, Point } from '../../types/types';
-import { useState } from 'react';
+import { Point } from '../../types/types';
+import { useEffect } from 'react';
 import CityList from '../../components/city-list/city-list';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { CITIES } from '../../mocks/city';
 import { OFFERS } from '../../mocks/offers';
-function MainPage(): JSX.Element {
+import { loadAllOffersAction } from '../../store/action';
 
-  const activeCity = useAppSelector((state) => state.city);
-  const cityOffers = OFFERS.filter((offer) => offer.city.name === activeCity?.name);
-  const points = cityOffers.map((offer) => {
-    const point: Point = {
-      id: offer.id,
-      latitude: offer.location.latitude,
-      longitude: offer.location.longitude
-    };
-    return point;
-  });
-  const [activeCard, setActiveCard] = useState<Nullable<Offer>>(null);
+function MainPage(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const activeOfferId = useAppSelector((state) => state.activeOfferId);
+  const selectedCity = useAppSelector((state) => state.activeCityName);
+  const allOffers = useAppSelector((state) => state.offers);
+  const cityOffers = allOffers.filter((offer) => offer.city.name === selectedCity);
+  const activeCity = CITIES.find((city) => city.name === selectedCity);
+  if (!activeCity) {
+    throw new Error('Could not get active city');
+  }
+
+  const points: Point[] = cityOffers.map((offer) => ({ id: offer.id, ...offer.location}));
+
+  useEffect(() => {
+    dispatch(loadAllOffersAction(OFFERS));
+  }, []);
 
   return (
     <div className="page page--gray page--main">
@@ -76,10 +81,10 @@ function MainPage(): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <OfferList offers={cityOffers} setActiveCard={setActiveCard} />
+              <OfferList offers={cityOffers}/>
             </section>
             <div className="cities__right-section">
-              <Map points={points} activeId={activeCard?.id} />
+              <Map points={points} activePointId={activeOfferId} center={activeCity.location}/>
             </div>
           </div>
         </div>

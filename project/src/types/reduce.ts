@@ -1,6 +1,7 @@
-import { City, Offer } from './types';
+import { Nullable, Offer } from './types';
 
 export type ReduceState = {
-  city?: City;
+  activeCityName: string;
   offers: Offer[];
+  activeOfferId: Nullable<number>;
 }
