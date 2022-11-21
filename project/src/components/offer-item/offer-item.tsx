@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
+import { HOTEL_TYPES } from '../../constants/const';
 import { useAppDispatch } from '../../hooks';
-import { HOTEL_TYPES } from '../../mocks/offers';
 import { activeOfferChangeAction } from '../../store/action';
 import { Offer } from '../../types/types';
 import IsPremium from '../is-premium/is-premium';

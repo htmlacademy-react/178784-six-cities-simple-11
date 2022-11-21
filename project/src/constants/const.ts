@@ -6,6 +6,8 @@ export const URL_MARKER_CURRENT = 'https://assets.htmlacademy.ru/content/intensi
 
 export const DEFAULT_CITY = 'Paris';
 
+export const TIMEOUT_SHOW_ERROR = 5000;
+
 export const defaultIcon = leaflet.icon({
   iconUrl: URL_MARKER_DEFAULT,
   iconSize: [40, 40],
@@ -17,3 +19,11 @@ export const activeIcon = new Icon({
   iconSize: [40, 40],
   iconAnchor: [20, 40]
 });
+
+export const HOTEL_TYPES: { [key: string]: string } = {
+  'apartment': 'Apartment',
+  'room': 'Private Room',
+  'house': 'House',
+  'hotel': 'Hotel'
+};
+

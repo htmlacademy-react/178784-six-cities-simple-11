@@ -1,29 +1,27 @@
 import OfferList from '../../components/offer-list/offer-list';
 import Map from '../../components/map/map';
 import { Point } from '../../types/types';
-import { useEffect } from 'react';
 import CityList from '../../components/city-list/city-list';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { CITIES } from '../../mocks/city';
-import { OFFERS } from '../../mocks/offers';
-import { loadAllOffersAction } from '../../store/action';
+import { useAppSelector } from '../../hooks';
+import { CITIES } from '../../constants/city';
+import { LoadingPage } from '../loading-page/loading-page';
 
 function MainPage(): JSX.Element {
-  const dispatch = useAppDispatch();
+  const isLoading = useAppSelector((state) => state.isLoading);
   const activeOfferId = useAppSelector((state) => state.activeOfferId);
   const selectedCity = useAppSelector((state) => state.activeCityName);
   const allOffers = useAppSelector((state) => state.offers);
   const cityOffers = allOffers.filter((offer) => offer.city.name === selectedCity);
   const activeCity = CITIES.find((city) => city.name === selectedCity);
+
   if (!activeCity) {
     throw new Error('Could not get active city');
   }
 
-  const points: Point[] = cityOffers.map((offer) => ({ id: offer.id, ...offer.location}));
-
-  useEffect(() => {
-    dispatch(loadAllOffersAction(OFFERS));
-  }, []);
+  const points: Point[] = cityOffers.map((offer) => ({ id: offer.id, ...offer.location }));
+  if (isLoading) {
+    return <LoadingPage />;
+  }
 
   return (
     <div className="page page--gray page--main">
@@ -81,10 +79,10 @@ function MainPage(): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <OfferList offers={cityOffers}/>
+              <OfferList offers={cityOffers} />
             </section>
             <div className="cities__right-section">
-              <Map points={points} activePointId={activeOfferId} center={activeCity.location}/>
+              <Map points={points} activePointId={activeOfferId} center={activeCity.location} />
             </div>
           </div>
         </div>
