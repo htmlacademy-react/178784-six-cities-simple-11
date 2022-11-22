@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { useAppDispatch } from '../../hooks';
-import { changeCityAction } from '../../store/action';
+import { cityChangeAction } from '../../store/action';
 import { City } from '../../types/types';
 
 type CityProps = {
@@ -18,7 +18,7 @@ function CityItem({ city, isActive }: CityProps): JSX.Element {
   );
   return (
     <li className="locations__item">
-      <a className={linkClass} href="#" onClick={() => dispatch(changeCityAction(city))}>
+      <a className={linkClass} href="#" onClick={() => dispatch(cityChangeAction(city.name))}>
         <span>{city.name}</span>
       </a>
     </li>

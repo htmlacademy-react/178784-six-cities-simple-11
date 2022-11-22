@@ -51,5 +51,4 @@ export const CITIES: City[] = [
   },
 ];
 
-export const AMSTERDAM = CITIES.find((city) => city.name === 'Amsterdam');
 

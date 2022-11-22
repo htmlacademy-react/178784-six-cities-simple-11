@@ -7,13 +7,13 @@ type CityListProps = {
 }
 
 function CityList({cities}: CityListProps): JSX.Element {
-  const activeCity = useAppSelector((state) => state.city);
+  const activeCity = useAppSelector((state) => state.activeCityName);
 
   return (
     <ul className="locations__list tabs__list">
       {
         cities.map((city) =>
-          <CityItem key={city.name} city={city} isActive={city.name === activeCity?.name}></CityItem>
+          <CityItem key={city.name} city={city} isActive={city.name === activeCity}></CityItem>
         )
       }
     </ul>
