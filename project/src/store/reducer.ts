@@ -2,7 +2,7 @@ import { createReducer } from '@reduxjs/toolkit';
 import { DEFAULT_CITY } from '../constants/const';
 import { AuthorizationStatus } from '../enums/authorization-status.enum';
 import { Offer, Nullable } from '../types/types';
-import { activeOfferChangeAction, changeAuthStatusAction, cityChangeAction, loadAllOffersAction, setLoadingAction } from './action';
+import { activeOfferChangeAction, changeAuthStatusAction, cityChangeAction, loadAllOffersAction, setErrorAction, setLoadingAction } from './action';
 
 export type ReduceState = {
   activeCityName: string;
@@ -37,5 +37,8 @@ export const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(setLoadingAction, (state, action) => {
     state.isLoading = action.payload;
+  });
+  builder.addCase(setErrorAction, (state, action) => {
+    state.error = action.payload;
   });
 });

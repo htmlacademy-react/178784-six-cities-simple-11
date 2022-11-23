@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { AppRouters } from '../../router/app-routers';
+import { AppRoute } from '../../router/app-routers';
 
 export function MainPageNoAuth(): JSX.Element {
   return (
@@ -15,7 +15,7 @@ export function MainPageNoAuth(): JSX.Element {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <Link className="header__nav-link header__nav-link--profile" to={AppRouters.LOGIN}>
+                  <Link className="header__nav-link header__nav-link--profile" to={AppRoute.LOGIN}>
                     <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                     <span className="header__login">Sign in</span>
                   </Link>

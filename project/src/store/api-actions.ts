@@ -4,11 +4,12 @@ import { store } from '.';
 import { TIMEOUT_SHOW_ERROR } from '../constants/const';
 import { APIRoute } from '../enums/api-route.enum';
 import { AuthorizationStatus } from '../enums/authorization-status.enum';
+import { AppRoute } from '../router/app-routers';
 import { dropToken, saveToken } from '../services/token';
 import { AuthData, UserData } from '../types/auth-data';
 import { AppDispatch, State } from '../types/state';
 import { Offer } from '../types/types';
-import { changeAuthStatusAction, loadAllOffersAction, setErrorAction, setLoadingAction } from './action';
+import { changeAuthStatusAction, loadAllOffersAction, redirectToRoute, setErrorAction, setLoadingAction } from './action';
 
 export const clearErrorAction = createAsyncThunk(
   'offer/clearError',
@@ -65,6 +66,7 @@ export const loginAction = createAsyncThunk<void, AuthData, {
     const userData = await api.post<UserData>(APIRoute.Login, data);
     saveToken(userData.data.token);
     dispatch(changeAuthStatusAction(AuthorizationStatus.Auth));
+    dispatch(redirectToRoute(AppRoute.MAIN));
   }
 );
 
@@ -78,5 +80,6 @@ export const logoutAction = createAsyncThunk<void, undefined, {
     await api.delete(APIRoute.Logout);
     dropToken();
     dispatch(changeAuthStatusAction(AuthorizationStatus.NoAuth));
+    dispatch(redirectToRoute(AppRoute.LOGIN));
   }
 );

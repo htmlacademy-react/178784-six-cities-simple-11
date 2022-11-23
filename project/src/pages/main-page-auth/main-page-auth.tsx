@@ -4,9 +4,8 @@ import OfferList from '../../components/offer-list/offer-list';
 import { CITIES } from '../../constants/city';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import Map from '../../components/map/map';
-import { useNavigate } from 'react-router-dom';
 import { logoutAction } from '../../store/api-actions';
-import { AppRouters } from '../../router/app-routers';
+import {MouseEvent} from 'react';
 
 
 export function MainPageAuth(): JSX.Element {
@@ -16,11 +15,10 @@ export function MainPageAuth(): JSX.Element {
   const cityOffers = allOffers.filter((offer) => offer.city.name === selectedCity);
   const activeCity = CITIES.find((city) => city.name === selectedCity);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
-  const onSingOut = () => {
-    dispatch(logoutAction);
-    navigate(AppRouters.LOGIN);
+  const onSingOut = (evt: MouseEvent<HTMLAnchorElement>) => {
+    evt.preventDefault();
+    dispatch(logoutAction());
   };
 
   if (!activeCity) {
