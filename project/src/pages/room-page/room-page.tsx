@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Host from '../../components/host/host';
 import IsPremium from '../../components/is-premium/is-premium';
 import PropertyGalery from '../../components/property-galery/property-galary';
@@ -7,15 +8,15 @@ import Rating from '../../components/rating/rating';
 import ReviewForm from '../../components/review-form/review-form';
 import { HOTEL_TYPES } from '../../constants/const';
 import { useAppSelector } from '../../hooks';
-import { processErrorHandler } from '../../services/process-error-handler';
+import { getOffers } from '../../store/offer-data/selectors';
 
 function RoomPage(): JSX.Element {
   const { id } = useParams();
-  const allOffers = useAppSelector((state) => state.offers);
+  const allOffers = useAppSelector(getOffers);
   const offerIndex = allOffers.findIndex((o) => id && o.id === +id);
   if (offerIndex < 0) {
     const error = `Could not get offer by id: ${id ?? 'undefined'}`;
-    processErrorHandler(error);
+    toast.warn(error);
     throw Error(error);
   }
   const offer = allOffers[offerIndex];

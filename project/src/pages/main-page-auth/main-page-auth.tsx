@@ -6,12 +6,14 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import Map from '../../components/map/map';
 import { logoutAction } from '../../store/api-actions';
 import {MouseEvent} from 'react';
+import { getActiveCityName, getActiveOfferId } from '../../store/offer-process/selectors';
+import { getOffers } from '../../store/offer-data/selectors';
 
 
 export function MainPageAuth(): JSX.Element {
-  const activeOfferId = useAppSelector((state) => state.activeOfferId);
-  const selectedCity = useAppSelector((state) => state.activeCityName);
-  const allOffers = useAppSelector((state) => state.offers);
+  const activeOfferId = useAppSelector(getActiveOfferId);
+  const selectedCity = useAppSelector(getActiveCityName);
+  const allOffers = useAppSelector(getOffers);
   const cityOffers = allOffers.filter((offer) => offer.city.name === selectedCity);
   const activeCity = CITIES.find((city) => city.name === selectedCity);
   const dispatch = useAppDispatch();
