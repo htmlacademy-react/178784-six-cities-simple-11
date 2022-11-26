@@ -27,3 +27,9 @@ export const HOTEL_TYPES: { [key: string]: string } = {
   'hotel': 'Hotel'
 };
 
+export enum NameSpace {
+  UserProcess = 'USER_PROCESS',
+  OfferProcess = 'OFFER_PROCESS',
+  OfferData = 'OFFER_DATA'
+}
+
