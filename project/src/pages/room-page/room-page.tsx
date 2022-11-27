@@ -1,25 +1,37 @@
-import { useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import Host from '../../components/host/host';
 import IsPremium from '../../components/is-premium/is-premium';
 import PropertyGalery from '../../components/property-galery/property-galary';
 import PropertyInside from '../../components/property-inside/property-inside';
 import Rating from '../../components/rating/rating';
 import ReviewForm from '../../components/review-form/review-form';
-import { HOTEL_TYPES } from '../../constants/const';
-import { useAppSelector } from '../../hooks';
-import { getOffers } from '../../store/offer-data/selectors';
+import Review from '../../components/review/review';
+import { HOTEL_TYPES, MAX_COMMENTS_COUNT } from '../../constants/const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { AppRoute } from '../../router/app-routers';
+import { getOfferById } from '../../services/helper';
+import { sortComments } from '../../services/sort';
+import { fetchOfferCommentsAction } from '../../store/api-actions';
+import { getOfferComments, getOffers } from '../../store/offer-data/selectors';
+import { getUser } from '../../store/user-process/selectors';
+
 
 function RoomPage(): JSX.Element {
   const { id } = useParams();
   const allOffers = useAppSelector(getOffers);
-  const offerIndex = allOffers.findIndex((o) => id && o.id === +id);
-  if (offerIndex < 0) {
-    const error = `Could not get offer by id: ${id ?? 'undefined'}`;
-    toast.warn(error);
-    throw Error(error);
-  }
-  const offer = allOffers[offerIndex];
+  const user = useAppSelector(getUser);
+  const offer = getOfferById(allOffers, id);
+  const comments = useAppSelector(getOfferComments);
+  const viewComments = comments
+    .map((comment) => comment)
+    .sort(sortComments)
+    .slice(0, MAX_COMMENTS_COUNT);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchOfferCommentsAction(offer.id));
+  }, []);
 
   return (
     <div className="page">
@@ -27,16 +39,16 @@ function RoomPage(): JSX.Element {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="main.html">
+              <Link className="header__logo-link" to={AppRoute.MAIN}>
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-              </a>
+              </Link>
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
                   <div className="header__nav-profile">
                     <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                    <span className="header__user-name user__name">{user.name}</span>
                   </div>
                 </li>
                 <li className="header__nav-item">
@@ -52,16 +64,16 @@ function RoomPage(): JSX.Element {
 
       <main className="page__main page__main--property">
         <section className="property">
-          <PropertyGalery offer={offer}/>
+          <PropertyGalery offer={offer} />
           <div className="property__container container">
             <div className="property__wrapper">
-              <IsPremium offer={offer}/>
+              <IsPremium offer={offer} />
               <div className="property__name-wrapper">
                 <h1 className="property__name">
                   {offer.title}
                 </h1>
               </div>
-              <Rating rating={offer?.rating} isShowValue />
+              <Rating rating={offer?.rating} isShowValue isReview={false} />
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
                   {HOTEL_TYPES[offer.type]}
@@ -77,38 +89,21 @@ function RoomPage(): JSX.Element {
                 <b className="property__price-value">&euro;{offer.price}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
-              <PropertyInside offer={offer}/>
+              <PropertyInside offer={offer} />
               <Host host={offer.host} />
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-                <ul className="reviews__list">
-                  <li className="reviews__item">
-                    <div className="reviews__user user">
-                      <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                        <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54"
-                          alt="Reviews avatar"
-                        />
-                      </div>
-                      <span className="reviews__user-name">
-                        Max
-                      </span>
-                    </div>
-                    <div className="reviews__info">
-                      <div className="reviews__rating rating">
-                        <div className="reviews__stars rating__stars">
-                          <span style={{ width: '80%' }}></span>
-                          <span className="visually-hidden">Rating</span>
-                        </div>
-                      </div>
-                      <p className="reviews__text">
-                        A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The
-                        building is green and from 18th century.
-                      </p>
-                      <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
-                    </div>
-                  </li>
-                </ul>
-                <ReviewForm />
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
+
+                {
+                  viewComments.length
+                    ?
+                    <ul className="reviews__list">
+                      {viewComments.map((comment) => <Review key={comment.id} comment={comment} />)}
+                    </ul>
+                    : ''
+                }
+
+                <ReviewForm offerId={offer.id} />
               </section>
             </div>
           </div>
@@ -207,3 +202,5 @@ function RoomPage(): JSX.Element {
 }
 
 export default RoomPage;
+
+

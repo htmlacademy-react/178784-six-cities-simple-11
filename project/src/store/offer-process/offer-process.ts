@@ -1,11 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DEFAULT_CITY, NameSpace } from '../../constants/const';
+import { SortType } from '../../enums/sort-type.enum';
 import { OfferProcess } from '../../types/state';
 import { Nullable } from '../../types/types';
 
 const initialState: OfferProcess = {
   activeOfferId: null,
   activeCityName: DEFAULT_CITY,
+  isSortOpened: false,
+  currentSort: SortType.Pupular,
 };
 
 export const offerProcess = createSlice({
@@ -17,8 +20,14 @@ export const offerProcess = createSlice({
     },
     activeOfferChangeAction: (state, action: PayloadAction<Nullable<number>>) => {
       state.activeOfferId = action.payload;
+    },
+    toggleSortOpenedAction: (state) => {
+      state.isSortOpened = !state.isSortOpened;
+    },
+    changeSortAction: (state, action: PayloadAction<SortType>) => {
+      state.currentSort = action.payload;
     }
   }
 });
 
-export const { activeOfferChangeAction, cityChangeAction } = offerProcess.actions;
+export const { activeOfferChangeAction, cityChangeAction, toggleSortOpenedAction, changeSortAction } = offerProcess.actions;

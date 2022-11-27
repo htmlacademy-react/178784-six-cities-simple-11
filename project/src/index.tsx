@@ -7,7 +7,6 @@ import { checkAuthAction, fetchAllOffersAction } from './store/api-actions';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 
-
 store.dispatch(fetchAllOffersAction());
 store.dispatch(checkAuthAction());
 

@@ -1,14 +1,27 @@
+import classNames from 'classnames';
+
 const maxRating = 5;
 
 export type RatingProps = {
   rating: number;
   isShowValue: boolean;
+  isReview: boolean;
 }
 
-function Rating({rating, isShowValue}: RatingProps) {
+function Rating({ rating, isShowValue, isReview }: RatingProps) {
   return (
-    <div className="place-card__rating rating">
-      <div className="place-card__stars rating__stars">
+    <div className={
+      classNames({ 'place-card__rating': !isReview },
+        { 'reviews__rating': isReview },
+        'rating')
+    }
+    >
+      <div className={
+        classNames({ 'place-card__stars': !isReview },
+          { 'reviews__stars': isReview },
+          'rating__stars')
+      }
+      >
         <span style={{ width: getWidthByRating(rating) }}></span>
         <span className="visually-hidden">Rating</span>
       </div>

@@ -1,3 +1,5 @@
+import { UserData } from './auth-data';
+
 export type Nullable<T> = T | null;
 
 export type Location = {
@@ -48,3 +50,16 @@ export type Offer = {
   goods: string[];
   location: Location;
 }
+
+export type NewComment = {
+  comment: string;
+  rating: number;
+}
+
+export type Comment = NewComment & {
+  date: string;
+  id: number;
+  user: UserData;
+};
+
+

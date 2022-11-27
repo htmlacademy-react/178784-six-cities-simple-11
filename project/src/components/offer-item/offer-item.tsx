@@ -31,7 +31,7 @@ function OfferItem({ offer }: OfferProp): JSX.Element {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
         </div>
-        <Rating rating={offer.rating} isShowValue={false}/>
+        <Rating rating={offer.rating} isShowValue={false} isReview={false}/>
         <h2 className="place-card__name">
           <a href="#">{offer.title}</a>
         </h2>

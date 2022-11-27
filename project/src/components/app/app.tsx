@@ -6,8 +6,20 @@ import RoomPage from '../../pages/room-page/room-page';
 import { AppRoute } from '../../router/app-routers';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
+import { useAppSelector } from '../../hooks';
+import { getIsLoading } from '../../store/offer-data/selectors';
+import { LoadingPage } from '../../pages/loading-page/loading-page';
+import { getAuthStatus } from '../../store/user-process/selectors';
+import { AuthorizationStatus } from '../../enums/authorization-status.enum';
 
 function App(): JSX.Element {
+  const authStatus = useAppSelector(getAuthStatus);
+  const isAuthChecked = authStatus !== AuthorizationStatus.Unknown;
+  const isLoading = useAppSelector(getIsLoading);
+  if (!isAuthChecked || isLoading) {
+    return <LoadingPage />;
+  }
+
   return (
     <HistoryRouter history={browserHistory}>
       <Routes>
