@@ -1,28 +1,26 @@
-import { useState, MouseEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { FormEvent, useRef } from 'react';
 import { useAppDispatch } from '../../hooks';
-import { AppRouters } from '../../router/app-routers';
 import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
+import { Nullable } from '../../types/types';
 
 function LoginPage(): JSX.Element {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const emailRef = useRef<Nullable<HTMLInputElement>>(null);
+  const passwordRef = useRef<Nullable<HTMLInputElement>>(null);
 
-  const [formData, setFormData] = useState<AuthData>({
-    email: '',
-    password: ''
-  });
-
-  const onFileldChanged = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = evt.target;
-    setFormData({ ...formData, [name]: value });
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    if (emailRef.current !== null && passwordRef.current !== null) {
+      onSubmit({
+        email: emailRef.current.value,
+        password: passwordRef.current.value
+      });
+    }
   };
 
-  const onLogin = (evt: MouseEvent) => {
-    evt.preventDefault();
+  const onSubmit = (formData: AuthData) => {
     dispatch(loginAction(formData));
-    navigate(AppRouters.MAIN);
   };
 
   return (
@@ -43,22 +41,20 @@ function LoginPage(): JSX.Element {
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form className="login__form form" action="#" method="post">
+            <form className="login__form form" action="#" method="post" onSubmit={handleSubmit}>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
-                <input className="login__input form__input" type="email" name="email" placeholder="Email" required={false}
-                  onChange={onFileldChanged} value={formData.email}
+                <input className="login__input form__input" ref={emailRef}
+                  type="email" name="email" placeholder="Email" required
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
-                <input className="login__input form__input" type="password" name="password" placeholder="Password" required={false}
-                  onChange={onFileldChanged} value={formData.password}
+                <input className="login__input form__input" ref={passwordRef}
+                  type="password" name="password" placeholder="Password" required
                 />
               </div>
-              <button className="login__submit form__submit button" type="submit"
-                onClick={onLogin}
-              >Sign in
+              <button className="login__submit form__submit button" type="submit">Sign in
               </button>
             </form>
           </section>

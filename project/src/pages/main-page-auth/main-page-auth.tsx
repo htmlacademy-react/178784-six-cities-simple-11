@@ -4,23 +4,23 @@ import OfferList from '../../components/offer-list/offer-list';
 import { CITIES } from '../../constants/city';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import Map from '../../components/map/map';
-import { useNavigate } from 'react-router-dom';
 import { logoutAction } from '../../store/api-actions';
-import { AppRouters } from '../../router/app-routers';
+import {MouseEvent} from 'react';
+import { getActiveCityName, getActiveOfferId } from '../../store/offer-process/selectors';
+import { getOffers } from '../../store/offer-data/selectors';
 
 
 export function MainPageAuth(): JSX.Element {
-  const activeOfferId = useAppSelector((state) => state.activeOfferId);
-  const selectedCity = useAppSelector((state) => state.activeCityName);
-  const allOffers = useAppSelector((state) => state.offers);
+  const activeOfferId = useAppSelector(getActiveOfferId);
+  const selectedCity = useAppSelector(getActiveCityName);
+  const allOffers = useAppSelector(getOffers);
   const cityOffers = allOffers.filter((offer) => offer.city.name === selectedCity);
   const activeCity = CITIES.find((city) => city.name === selectedCity);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
-  const onSingOut = () => {
-    dispatch(logoutAction);
-    navigate(AppRouters.LOGIN);
+  const onSingOut = (evt: MouseEvent<HTMLAnchorElement>) => {
+    evt.preventDefault();
+    dispatch(logoutAction());
   };
 
   if (!activeCity) {
