@@ -1,13 +1,13 @@
 import { Point } from '../../types/types';
 import OfferList from '../offer-list/offer-list';
 import Sort from '../sort/sort';
-import Map from '../../components/map/map';
+import CityMap from '../city-map/city-map';
 import { useAppSelector } from '../../hooks';
 import { getActiveCityName, getCurrentSort } from '../../store/offer-process/selectors';
 import { CITIES } from '../../constants/city';
 import { getOffers } from '../../store/offer-data/selectors';
 import { getSortFunction } from '../../services/sort';
-
+import { getPoints } from '../../services/helper';
 
 function CityPlaces(): JSX.Element {
   const selectedCity = useAppSelector(getActiveCityName);
@@ -19,7 +19,7 @@ function CityPlaces(): JSX.Element {
     .filter((offer) => offer.city.name === selectedCity)
     .sort(getSortFunction(currentSort));
 
-  const points: Point[] = offers.map((offer) => ({ id: offer.id, ...offer.location }));
+  const points: Point[] = getPoints(offers);
 
   if (!activeCity) {
     throw new Error('Could not get active city');
@@ -34,7 +34,7 @@ function CityPlaces(): JSX.Element {
         <OfferList offers={offers} />
       </section>
       <div className="cities__right-section">
-        <Map points={points} center={activeCity.location} />
+        <CityMap points={points} center={activeCity.location}/>
       </div>
     </div>
   );

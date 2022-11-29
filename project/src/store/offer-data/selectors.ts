@@ -7,5 +7,4 @@ export const getError = (state: State): Nullable<string> => state[NameSpace.Offe
 export const getIsLoading = (state: State): boolean => state[NameSpace.OfferData].isLoading;
 export const getOfferComments = (state: State): Comment[] => state[NameSpace.OfferData].comments;
 export const getIsCommentSending = (state: State): boolean => state[NameSpace.OfferData].isCommentSending;
-
-
+export const getNearOffers = (state: State): Offer[] => state[NameSpace.OfferData].nearOffers;

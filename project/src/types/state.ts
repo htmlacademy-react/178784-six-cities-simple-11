@@ -15,6 +15,7 @@ export type OfferData = {
   isLoading: boolean;
   comments: Comment[];
   isCommentSending: boolean;
+  nearOffers: Offer[];
 }
 
 export type OfferProcess = {

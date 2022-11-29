@@ -1,18 +1,18 @@
 import { useEffect, useRef } from 'react';
 import useMap from '../../hooks/use-map';
 import leaflet from 'leaflet';
-import { Point, Location } from '../../types/types';
 import 'leaflet/dist/leaflet.css';
+import { Point, Location } from '../../types/types';
 import { activeIcon, defaultIcon } from '../../constants/const';
 import { useAppSelector } from '../../hooks';
 import { getActiveOfferId } from '../../store/offer-process/selectors';
 
-type MapProps = {
+type CityMapProps = {
   points: Point[];
   center: Location;
 }
 
-function Map({ points, center }: MapProps): JSX.Element {
+function CityMap({ points, center }: CityMapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, center);
   const activeOfferId = useAppSelector(getActiveOfferId);
@@ -37,4 +37,4 @@ function Map({ points, center }: MapProps): JSX.Element {
   );
 }
 
-export default Map;
+export default CityMap;
