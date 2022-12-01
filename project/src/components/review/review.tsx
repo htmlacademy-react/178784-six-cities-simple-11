@@ -3,7 +3,7 @@ import { COMMENT_DATE_FORMAT } from '../../constants/const';
 import { Comment } from '../../types/types';
 import Rating from '../rating/rating';
 
-export type ReviewProps = {
+type ReviewProps = {
   comment: Comment;
 }
 

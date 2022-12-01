@@ -32,8 +32,10 @@ function RoomPage(): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchOfferCommentsAction(offer.id));
-    dispatch(fetchNearOffersAction(offer.id));
+    if (id) {
+      dispatch(fetchOfferCommentsAction(offer.id));
+      dispatch(fetchNearOffersAction(offer.id));
+    }
   }, [id]);
 
   return (
@@ -50,7 +52,12 @@ function RoomPage(): JSX.Element {
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
                   <div className="header__nav-profile">
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+                    <div className="header__avatar-wrapper user__avatar-wrapper">
+                      <img className="reviews__avatar user__avatar" src={user.avatarUrl} width="20" height="20"
+                        alt={user.name}
+                      >
+                      </img>
+                    </div>
                     <span className="header__user-name user__name">{user.name}</span>
                   </div>
                 </li>

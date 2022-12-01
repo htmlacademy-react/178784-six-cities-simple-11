@@ -2,7 +2,7 @@ import { AuthorizationStatus } from '../enums/authorization-status.enum';
 import { SortType } from '../enums/sort-type.enum';
 import { store } from '../store';
 import { UserData } from './auth-data';
-import { Nullable, Offer, Comment } from './types';
+import { Nullable, Offer, Comment, City } from './types';
 
 export type UserProcess = {
   authStatus: AuthorizationStatus;
@@ -11,6 +11,7 @@ export type UserProcess = {
 
 export type OfferData = {
   offers: Offer[];
+  cities: City[];
   error: Nullable<string>;
   isLoading: boolean;
   comments: Comment[];
@@ -20,7 +21,7 @@ export type OfferData = {
 
 export type OfferProcess = {
   activeOfferId: Nullable<number>;
-  activeCityName: string;
+  activeCity: Nullable<City>;
   isSortOpened: boolean;
   currentSort: SortType;
 }

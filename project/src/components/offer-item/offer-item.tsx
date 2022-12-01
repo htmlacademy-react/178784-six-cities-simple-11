@@ -2,13 +2,9 @@ import { Link } from 'react-router-dom';
 import { HOTEL_TYPES } from '../../constants/const';
 import { useAppDispatch } from '../../hooks';
 import { activeOfferChangeAction } from '../../store/offer-process/offer-process';
-import { Offer } from '../../types/types';
+import { OfferProps } from '../../types/props';
 import IsPremium from '../is-premium/is-premium';
 import Rating from '../rating/rating';
-
-export type OfferProps = {
-  offer: Offer;
-}
 
 function OfferItem({ offer }: OfferProps): JSX.Element {
   const dispatch = useAppDispatch();

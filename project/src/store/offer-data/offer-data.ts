@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NameSpace } from '../../constants/const';
 import { OfferData } from '../../types/state';
 import { fetchAllOffersAction, setCommentAction } from '../api-actions';
-import { Comment, Offer } from '../../types/types';
+import { City, Comment, Offer } from '../../types/types';
+import { NameSpace } from '../../enums/name-spaces.enum';
 
 const initialState: OfferData = {
   offers: [],
@@ -11,6 +11,7 @@ const initialState: OfferData = {
   comments: [],
   isCommentSending: false,
   nearOffers: [],
+  cities: []
 };
 
 export const offerData = createSlice({
@@ -22,6 +23,9 @@ export const offerData = createSlice({
     },
     setNearOffersAction: (state, action: PayloadAction<Offer[]>) => {
       state.nearOffers = action.payload;
+    },
+    setAllCitiesAction: (state, action: PayloadAction<City[]>) => {
+      state.cities = action.payload;
     }
   },
   extraReducers(builder) {
@@ -48,4 +52,4 @@ export const offerData = createSlice({
   }
 });
 
-export const {setOfferCommentsAction, setNearOffersAction} = offerData.actions;
+export const {setOfferCommentsAction, setNearOffersAction, setAllCitiesAction} = offerData.actions;

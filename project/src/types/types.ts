@@ -18,14 +18,6 @@ export type City = {
   location: Location;
 }
 
-export type WithHostProps = {
-  host: Host;
-}
-
-export type WithOfferProps = {
-  offer: Offer;
-}
-
 export type Host = {
   avatarUrl: string;
   id: number;

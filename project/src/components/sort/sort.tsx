@@ -7,7 +7,6 @@ import { toggleSortOpenedAction } from '../../store/offer-process/offer-process'
 import { getCurrentSort, getIsSortOpened } from '../../store/offer-process/selectors';
 import SortItem from '../sort-item/sort-item';
 
-
 function Sort(): JSX.Element {
   const dispatch = useAppDispatch();
   const onSortingToggle = (evt: MouseEvent<HTMLFormElement>) => {

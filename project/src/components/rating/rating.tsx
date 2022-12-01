@@ -2,7 +2,7 @@ import classNames from 'classnames';
 
 const maxRating = 5;
 
-export type RatingProps = {
+type RatingProps = {
   rating: number;
   isShowValue: boolean;
   isReview: boolean;

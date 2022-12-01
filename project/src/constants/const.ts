@@ -40,10 +40,3 @@ export const SORT_TYPES = new Map<SortType, string>([
   [SortType.PriceHithToLow, 'Price: high to low'],
   [SortType.TopRatedFirst, 'Top rated first']
 ]);
-
-export enum NameSpace {
-  UserProcess = 'USER_PROCESS',
-  OfferProcess = 'OFFER_PROCESS',
-  OfferData = 'OFFER_DATA'
-}
-

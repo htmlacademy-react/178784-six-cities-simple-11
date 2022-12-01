@@ -1,29 +1,27 @@
-import { Point } from '../../types/types';
 import OfferList from '../offer-list/offer-list';
 import Sort from '../sort/sort';
 import CityMap from '../city-map/city-map';
 import { useAppSelector } from '../../hooks';
-import { getActiveCityName, getCurrentSort } from '../../store/offer-process/selectors';
-import { CITIES } from '../../constants/city';
+import { getActiveCity, getCurrentSort } from '../../store/offer-process/selectors';
 import { getOffers } from '../../store/offer-data/selectors';
 import { getSortFunction } from '../../services/sort';
 import { getPoints } from '../../services/helper';
+import { Nullable, Point } from '../../types/types';
 
-function CityPlaces(): JSX.Element {
-  const selectedCity = useAppSelector(getActiveCityName);
-  const activeCity = CITIES.find((city) => city.name === selectedCity);
+function CityPlaces(): Nullable<JSX.Element> {
+  const activeCity = useAppSelector(getActiveCity);
   const allOffers = useAppSelector(getOffers);
   const currentSort = useAppSelector(getCurrentSort);
 
+  if (!activeCity) {
+    return (null);
+  }
+
   const offers = allOffers
-    .filter((offer) => offer.city.name === selectedCity)
+    .filter((offer) => offer.city.name === activeCity.name)
     .sort(getSortFunction(currentSort));
 
   const points: Point[] = getPoints(offers);
-
-  if (!activeCity) {
-    throw new Error('Could not get active city');
-  }
 
   return (
     <div className="cities__places-container container">

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NameSpace } from '../../constants/const';
 import { AuthorizationStatus } from '../../enums/authorization-status.enum';
+import { NameSpace } from '../../enums/name-spaces.enum';
 import { UserData } from '../../types/auth-data';
 import { UserProcess } from '../../types/state';
 import { checkAuthAction, loginAction, logoutAction } from '../api-actions';

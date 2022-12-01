@@ -1,4 +1,4 @@
-import { WithOfferProps } from '../../types/types';
+import { WithOfferProps } from '../../types/props';
 
 function PropertyInside({ offer }: WithOfferProps): JSX.Element {
   return (

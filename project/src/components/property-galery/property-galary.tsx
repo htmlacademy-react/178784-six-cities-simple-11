@@ -1,5 +1,5 @@
 import { MAX_GALARY_IMG_COUNT } from '../../constants/const';
-import { WithOfferProps } from '../../types/types';
+import { WithOfferProps } from '../../types/props';
 
 function PropertyGalery({offer}: WithOfferProps): JSX.Element {
   return (

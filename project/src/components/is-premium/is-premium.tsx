@@ -1,4 +1,4 @@
-import { WithOfferProps } from '../../types/types';
+import { WithOfferProps } from '../../types/props';
 
 function IsPremium({offer}: WithOfferProps): JSX.Element | null {
   return (offer.isPremium ?

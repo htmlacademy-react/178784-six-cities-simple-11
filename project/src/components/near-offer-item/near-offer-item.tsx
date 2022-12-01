@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom';
 import { HOTEL_TYPES } from '../../constants/const';
-import { OfferProps } from '../offer-item/offer-item';
+import { OfferProps } from '../../types/props';
 import Rating from '../rating/rating';
-
 
 function NearOfferItem({ offer }: OfferProps): JSX.Element {
   return (

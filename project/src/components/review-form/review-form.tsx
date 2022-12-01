@@ -5,7 +5,7 @@ import { setCommentAction } from '../../store/api-actions';
 import { getIsCommentSending } from '../../store/offer-data/selectors';
 import { NewComment } from '../../types/types';
 
-export type ReviewFormProps = {
+type ReviewFormProps = {
   offerId: number;
 }
 

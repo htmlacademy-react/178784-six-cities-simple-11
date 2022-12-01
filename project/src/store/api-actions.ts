@@ -2,12 +2,14 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { APIRoute } from '../enums/api-route.enum';
 import { AppRoute } from '../router/app-routers';
+import { getAllCities } from '../services/helper';
 import { dropToken, saveToken } from '../services/token';
 import { AuthData, UserData } from '../types/auth-data';
 import { AppDispatch, State } from '../types/state';
 import { Offer, Comment, NewComment } from '../types/types';
 import { redirectToRoute } from './action';
-import { setNearOffersAction, setOfferCommentsAction } from './offer-data/offer-data';
+import { setAllCitiesAction, setNearOffersAction, setOfferCommentsAction } from './offer-data/offer-data';
+import { changeActiveCityAction } from './offer-process/offer-process';
 
 export const fetchOfferCommentsAction = createAsyncThunk<void, number, {
   dispatch: AppDispatch;
@@ -53,6 +55,12 @@ export const fetchAllOffersAction = createAsyncThunk<Offer[], undefined, {
   'data/fetchAllOffers',
   async (_args, { dispatch, extra: api }) => {
     const { data } = await api.get<Offer[]>(APIRoute.Offers);
+    const allCities = getAllCities(data);
+    dispatch(setAllCitiesAction(allCities));
+    if (allCities.length) {
+      dispatch(changeActiveCityAction(allCities[0]));
+    }
+
     return data;
   }
 );

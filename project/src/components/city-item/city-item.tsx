@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import { MouseEvent } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { cityChangeAction } from '../../store/offer-process/offer-process';
-import { getActiveCityName } from '../../store/offer-process/selectors';
+import { changeActiveCityAction } from '../../store/offer-process/offer-process';
+import { getActiveCity } from '../../store/offer-process/selectors';
 import { City } from '../../types/types';
 
 type CityProps = {
@@ -11,11 +11,11 @@ type CityProps = {
 
 function CityItem({ city }: CityProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const activeCity = useAppSelector(getActiveCityName);
-  const isActive = city.name === activeCity;
+  const activeCity = useAppSelector(getActiveCity);
+  const isActive = city.name === activeCity?.name;
   const handleClick = (evt: MouseEvent<HTMLAnchorElement>) => {
     evt.preventDefault();
-    dispatch(cityChangeAction(city.name));
+    dispatch(changeActiveCityAction(city));
   };
 
   const linkClass = classNames(

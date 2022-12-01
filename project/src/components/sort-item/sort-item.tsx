@@ -5,7 +5,7 @@ import { SortType } from '../../enums/sort-type.enum';
 import { useAppDispatch } from '../../hooks';
 import { changeSortAction } from '../../store/offer-process/offer-process';
 
-export type SortItemProps = {
+type SortItemProps = {
   sortType: SortType;
   currentSort: SortType;
 }
