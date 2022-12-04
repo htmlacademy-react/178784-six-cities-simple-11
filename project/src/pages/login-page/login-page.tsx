@@ -1,6 +1,10 @@
 import { FormEvent, useRef } from 'react';
-import { useAppDispatch } from '../../hooks';
+import { Link, Navigate } from 'react-router-dom';
+import { AuthorizationStatus } from '../../enums/authorization-status.enum';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { AppRoute } from '../../router/app-routers';
 import { loginAction } from '../../store/api-actions';
+import { getAuthStatus } from '../../store/user-process/selectors';
 import { AuthData } from '../../types/auth-data';
 import { Nullable } from '../../types/types';
 
@@ -8,6 +12,7 @@ function LoginPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const emailRef = useRef<Nullable<HTMLInputElement>>(null);
   const passwordRef = useRef<Nullable<HTMLInputElement>>(null);
+  const authStatus = useAppSelector(getAuthStatus);
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -23,15 +28,19 @@ function LoginPage(): JSX.Element {
     dispatch(loginAction(formData));
   };
 
+  if (authStatus === AuthorizationStatus.Auth) {
+    return <Navigate to={AppRoute.MAIN} />;
+  }
+
   return (
     <div className="page page--gray page--login">
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="main.html">
+              <Link className="header__logo-link" to={AppRoute.MAIN}>
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -60,7 +69,7 @@ function LoginPage(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
+              <a className="locations__item-link" href="/#">
                 <span>Amsterdam</span>
               </a>
             </div>

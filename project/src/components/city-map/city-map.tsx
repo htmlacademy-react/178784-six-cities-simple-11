@@ -1,19 +1,21 @@
 import { useEffect, useRef } from 'react';
 import useMap from '../../hooks/use-map';
 import leaflet from 'leaflet';
-import { Point, Location, Nullable } from '../../types/types';
 import 'leaflet/dist/leaflet.css';
+import { Point, Location } from '../../types/types';
 import { activeIcon, defaultIcon } from '../../constants/const';
+import { useAppSelector } from '../../hooks';
+import { getActiveOfferId } from '../../store/offer-process/selectors';
 
-type MapProps = {
+type CityMapProps = {
   points: Point[];
-  activePointId: Nullable<number>;
   center: Location;
 }
 
-function Map({ points, activePointId, center }: MapProps): JSX.Element {
+function CityMap({ points, center }: CityMapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, center);
+  const activeOfferId = useAppSelector(getActiveOfferId);
 
   useEffect(() => {
     if (map) {
@@ -23,16 +25,16 @@ function Map({ points, activePointId, center }: MapProps): JSX.Element {
             lat: point.latitude,
             lng: point.longitude,
           }, {
-            icon: point.id === activePointId ? activeIcon : defaultIcon,
+            icon: point.id === activeOfferId ? activeIcon : defaultIcon,
           })
           .addTo(map);
       });
     }
-  }, [map, points, activePointId]);
+  }, [map, points, activeOfferId]);
 
   return (
     <section className="cities__map map" ref={mapRef}></section>
   );
 }
 
-export default Map;
+export default CityMap;

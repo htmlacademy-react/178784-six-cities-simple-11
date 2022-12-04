@@ -1,3 +1,5 @@
+import { UserData } from './auth-data';
+
 export type Nullable<T> = T | null;
 
 export type Location = {
@@ -14,14 +16,6 @@ export type Point = Omit<Location, 'zoom'> &
 export type City = {
   name: string;
   location: Location;
-}
-
-export type WithHostProps = {
-  host: Host;
-}
-
-export type WithOfferProps = {
-  offer: Offer;
 }
 
 export type Host = {
@@ -48,3 +42,16 @@ export type Offer = {
   goods: string[];
   location: Location;
 }
+
+export type NewComment = {
+  comment: string;
+  rating: number;
+}
+
+export type Comment = NewComment & {
+  date: string;
+  id: number;
+  user: UserData;
+};
+
+
