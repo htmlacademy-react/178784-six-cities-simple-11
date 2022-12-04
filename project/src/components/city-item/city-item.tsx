@@ -25,7 +25,7 @@ function CityItem({ city }: CityProps): JSX.Element {
   );
   return (
     <li className="locations__item">
-      <a className={linkClass} href="#" onClick={handleClick}>
+      <a className={linkClass} href="/#" onClick={handleClick}>
         <span>{city.name}</span>
       </a>
     </li>

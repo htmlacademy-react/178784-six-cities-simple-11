@@ -9,7 +9,7 @@ import SortItem from '../sort-item/sort-item';
 
 function Sort(): JSX.Element {
   const dispatch = useAppDispatch();
-  const onSortingToggle = (evt: MouseEvent<HTMLFormElement>) => {
+  const handleSortingToggle = (evt: MouseEvent<HTMLFormElement>) => {
     evt.preventDefault();
     dispatch(toggleSortOpenedAction());
   };
@@ -22,7 +22,7 @@ function Sort(): JSX.Element {
   );
 
   return (
-    <form className="places__sorting" action="#" method="get" onClick={onSortingToggle}>
+    <form className="places__sorting" action="#" method="get" onClick={handleSortingToggle}>
       <span className="places__sorting-caption">Sort by</span>
       <span className="places__sorting-type" tabIndex={0}>
         {SORT_TYPES.get(currentSort)}

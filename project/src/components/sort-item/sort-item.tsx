@@ -13,7 +13,7 @@ type SortItemProps = {
 function SortItem({ sortType, currentSort }: SortItemProps): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const onSortSelect = (evt: MouseEvent) => {
+  const handleSortSelect = (evt: MouseEvent) => {
     evt.preventDefault();
     dispatch(changeSortAction(sortType));
   };
@@ -23,7 +23,7 @@ function SortItem({ sortType, currentSort }: SortItemProps): JSX.Element {
     { 'places__option--active': sortType === currentSort }
   );
 
-  return <li className={liClass} tabIndex={0} onClick={onSortSelect}> {SORT_TYPES.get(sortType)}</ li>;
+  return <li className={liClass} tabIndex={0} onClick={handleSortSelect}> {SORT_TYPES.get(sortType)}</ li>;
 }
 
 export default SortItem;

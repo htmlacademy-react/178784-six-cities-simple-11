@@ -30,7 +30,7 @@ function useMap(
       isRenderedRef.current = true;
     }
     map?.setView([center.latitude, center.longitude], center.zoom);
-  }, [mapRef, center]);
+  }, [mapRef, center, map]);
 
   return map;
 }

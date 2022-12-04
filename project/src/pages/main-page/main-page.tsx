@@ -15,7 +15,7 @@ function MainPage(): JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  const onSingOut = (evt: MouseEvent<HTMLAnchorElement>) => {
+  const handleSingOut = (evt: MouseEvent<HTMLAnchorElement>) => {
     evt.preventDefault();
     dispatch(logoutAction());
   };
@@ -44,7 +44,7 @@ function MainPage(): JSX.Element {
                   </div>
                 </li>
                 <li className="header__nav-item">
-                  <a className="header__nav-link" onClick={onSingOut}>
+                  <a className="header__nav-link" href="/#" onClick={handleSingOut}>
                     <span className="header__signout">Sign out</span>
                   </a>
                 </li>

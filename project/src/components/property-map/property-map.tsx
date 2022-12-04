@@ -12,18 +12,14 @@ type PropertyMapProps = {
   nearOffers: Offer[];
 }
 
-
 function PropertyMap({currentOffer, nearOffers}: PropertyMapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, currentOffer.city.location);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let markerGroup: leaflet.LayerGroup<any>;
-  //const activeOfferId = useAppSelector(getActiveOfferId);
-  const points = [...getPoints(nearOffers), getPoint(currentOffer)];
 
   useEffect(() => {
     if (map) {
-      markerGroup = L.layerGroup().addTo(map);
+      const points = [...getPoints(nearOffers), getPoint(currentOffer)];
+      const markerGroup = L.layerGroup().addTo(map);
 
       points.forEach((point) => {
         leaflet

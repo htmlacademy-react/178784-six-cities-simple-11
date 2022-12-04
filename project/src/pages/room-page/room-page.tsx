@@ -22,8 +22,8 @@ function RoomPage(): JSX.Element {
   const { id } = useParams();
   const allOffers = useAppSelector(getOffers);
   const user = useAppSelector(getUser);
-  const offer = getOfferById(allOffers, id);
   const allComments = useAppSelector(getOfferComments);
+  const offer = getOfferById(allOffers, id);
   const nearOffers = useAppSelector(getNearOffers);
   const comments = allComments
     .map((comment) => comment)
@@ -36,7 +36,7 @@ function RoomPage(): JSX.Element {
       dispatch(fetchOfferCommentsAction(offer.id));
       dispatch(fetchNearOffersAction(offer.id));
     }
-  }, [id]);
+  }, [dispatch, id, offer.id]);
 
   return (
     <div className="page">
@@ -62,7 +62,7 @@ function RoomPage(): JSX.Element {
                   </div>
                 </li>
                 <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
+                  <a className="header__nav-link" href="/#">
                     <span className="header__signout">Sign out</span>
                   </a>
                 </li>

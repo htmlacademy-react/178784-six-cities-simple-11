@@ -15,12 +15,12 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
     rating: ''
   });
 
-  const onFileldChanged = (evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleFileldChanged = (evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = evt.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const onCommnetFileldChanged = (evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleCommnetFileldChanged = (evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, maxLength } = evt.target;
 
     const trimCommnet = value.length > maxLength ? value.slice(0, maxLength) : value;
@@ -32,7 +32,7 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  const onSubmit = (evt: FormEvent) => {
+  const handleSubmit = (evt: FormEvent) => {
     evt.preventDefault();
 
     const comment: NewComment = {
@@ -45,12 +45,12 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
   };
 
   return (
-    <form className="reviews__form form" action="#" method="post" onSubmit={onSubmit}>
+    <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio"
           disabled={isCommentSending}
-          onChange={onFileldChanged} checked={formData.rating === '5'}
+          onChange={handleFileldChanged} checked={formData.rating === '5'}
         />
         <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
           <svg className="form__star-image" width="37" height="33">
@@ -60,7 +60,7 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
 
         <input className="form__rating-input visually-hidden" name="rating" value="4" id="4-stars" type="radio"
           disabled={isCommentSending}
-          onChange={onFileldChanged} checked={formData.rating === '4'}
+          onChange={handleFileldChanged} checked={formData.rating === '4'}
         />
         <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
           <svg className="form__star-image" width="37" height="33">
@@ -70,7 +70,7 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
 
         <input className="form__rating-input visually-hidden" name="rating" value="3" id="3-stars" type="radio"
           disabled={isCommentSending}
-          onChange={onFileldChanged} checked={formData.rating === '3'}
+          onChange={handleFileldChanged} checked={formData.rating === '3'}
         />
         <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
           <svg className="form__star-image" width="37" height="33">
@@ -80,7 +80,7 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
 
         <input className="form__rating-input visually-hidden" name="rating" value="2" id="2-stars" type="radio"
           disabled={isCommentSending}
-          onChange={onFileldChanged} checked={formData.rating === '2'}
+          onChange={handleFileldChanged} checked={formData.rating === '2'}
         />
         <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
           <svg className="form__star-image" width="37" height="33">
@@ -90,7 +90,7 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
 
         <input className="form__rating-input visually-hidden" name="rating" value="1" id="1-star" type="radio"
           disabled={isCommentSending}
-          onChange={onFileldChanged} checked={formData.rating === '1'}
+          onChange={handleFileldChanged} checked={formData.rating === '1'}
         />
         <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
           <svg className="form__star-image" width="37" height="33">
@@ -101,7 +101,7 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
       <textarea className="reviews__textarea form__textarea" id="review" name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         readOnly={isCommentSending}
-        onChange={onCommnetFileldChanged} value={formData.review} maxLength={MAX_COMMENT_LENGTH}
+        onChange={handleCommnetFileldChanged} value={formData.review} maxLength={MAX_COMMENT_LENGTH}
       >
       </textarea>
       <div className="reviews__button-wrapper">
