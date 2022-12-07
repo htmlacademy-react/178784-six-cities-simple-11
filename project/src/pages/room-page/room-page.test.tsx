@@ -49,6 +49,24 @@ describe('Component: RoomPage', () => {
     expect(screen.getByText(/Other places in the neighbourhood/i)).toBeInTheDocument();
     expect(screen.getByText(/Sign out/i)).toBeInTheDocument();
   });
+
+  it('should navigate to not found if offer not exists', () => {
+    history.push('/offer/1234');
+
+    render(
+      <Provider store={store}>
+        <HistoryRouter history={history}>
+          <Routes>
+            <Route path={AppRoute.Room} element={<RoomPage />}>
+            </Route>
+          </Routes>
+        </HistoryRouter>
+      </Provider>,
+    );
+
+    expect(screen.getByText('Страница не найдена')).toBeInTheDocument();
+    expect(screen.getByText('Перейти на главную')).toBeInTheDocument();
+  });
 });
 
 
