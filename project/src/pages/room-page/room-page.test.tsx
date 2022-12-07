@@ -11,6 +11,7 @@ import RoomPage from './room-page';
 import thunk, { ThunkDispatch } from 'redux-thunk';
 import { State } from '../../types/state';
 import { Action } from '@reduxjs/toolkit';
+import NotFoundPage from '../not-found-page/not-found-page';
 
 const api = createApi();
 const middlewares = [thunk.withExtraArgument(api)];
@@ -58,6 +59,8 @@ describe('Component: RoomPage', () => {
         <HistoryRouter history={history}>
           <Routes>
             <Route path={AppRoute.Room} element={<RoomPage />}>
+            </Route>
+            <Route path={AppRoute.NotFound} element={<NotFoundPage />}>
             </Route>
           </Routes>
         </HistoryRouter>

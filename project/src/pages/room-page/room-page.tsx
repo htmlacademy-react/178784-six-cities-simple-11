@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, Navigate, useParams } from 'react-router-dom';
 import Host from '../../components/host/host';
 import IsPremium from '../../components/is-premium/is-premium';
 import PropertyGalery from '../../components/property-galery/property-galary';
@@ -23,21 +23,26 @@ function RoomPage(): JSX.Element {
   const allOffers = useAppSelector(getOffers);
   const user = useAppSelector(getUser);
   const allComments = useAppSelector(getOfferComments);
-  const offer = getOfferById(allOffers, id);
+
   const nearOffers = useAppSelector(getNearOffers);
   const comments = allComments
     .map((comment) => comment)
     .sort(sortComments)
     .slice(0, MAX_COMMENTS_COUNT);
   const dispatch = useAppDispatch();
+  const offer = getOfferById(allOffers, id);
 
   useEffect(() => {
-    if (id) {
+    if (offer) {
       dispatch(fetchOfferCommentsAction(offer.id));
       dispatch(fetchNearOffersAction(offer.id));
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
+
+  if (offer === null) {
+    return <Navigate to={AppRoute.NotFound}/>;
+  }
 
   return (
     <div className="page">
