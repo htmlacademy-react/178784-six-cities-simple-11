@@ -1,7 +1,7 @@
 import { Comment, Nullable } from '../../types/types';
 import Review from '../review/review';
 
-type ReviewListProps = {
+export type ReviewListProps = {
   comments: Comment[];
 }
 

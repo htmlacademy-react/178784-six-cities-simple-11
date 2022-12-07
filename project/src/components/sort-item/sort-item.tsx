@@ -5,7 +5,7 @@ import { SortType } from '../../enums/sort-type.enum';
 import { useAppDispatch } from '../../hooks';
 import { changeSortAction } from '../../store/offer-process/offer-process';
 
-type SortItemProps = {
+export type SortItemProps = {
   sortType: SortType;
   currentSort: SortType;
 }
@@ -23,7 +23,7 @@ function SortItem({ sortType, currentSort }: SortItemProps): JSX.Element {
     { 'places__option--active': sortType === currentSort }
   );
 
-  return <li className={liClass} tabIndex={0} onClick={handleSortSelect}> {SORT_TYPES.get(sortType)}</ li>;
+  return <li className={liClass} tabIndex={0} onClick={handleSortSelect} data-testid="sort"> {SORT_TYPES.get(sortType)}</ li>;
 }
 
 export default SortItem;

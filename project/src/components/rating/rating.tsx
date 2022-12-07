@@ -2,7 +2,7 @@ import classNames from 'classnames';
 
 const maxRating = 5;
 
-type RatingProps = {
+export type RatingProps = {
   rating: number;
   isShowValue: boolean;
   isReview: boolean;
@@ -15,17 +15,19 @@ function Rating({ rating, isShowValue, isReview }: RatingProps) {
         { 'reviews__rating': isReview },
         'rating')
     }
+    data-testid="rating-container"
     >
       <div className={
         classNames({ 'place-card__stars': !isReview },
           { 'reviews__stars': isReview },
           'rating__stars')
       }
+      data-testid="rating-stars"
       >
         <span style={{ width: getWidthByRating(rating) }}></span>
         <span className="visually-hidden">Rating</span>
       </div>
-      {isShowValue && <span className="property__rating-value rating__value">{rating}</span>}
+      {isShowValue && <span className="property__rating-value rating__value" data-testid="rating">{rating}</span>}
     </div>
   );
 }

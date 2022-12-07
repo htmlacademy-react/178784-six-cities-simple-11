@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { activeIcon, defaultIcon } from '../../constants/const';
 import useMap from '../../hooks/use-map';
-import { getPoint, getPoints } from '../../services/helper';
+import { getPoint, getPoints } from '../../utils/helper';
 import { Offer } from '../../types/types';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
