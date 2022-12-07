@@ -13,6 +13,9 @@ function LoginPage(): JSX.Element {
   const emailRef = useRef<Nullable<HTMLInputElement>>(null);
   const passwordRef = useRef<Nullable<HTMLInputElement>>(null);
   const authStatus = useAppSelector(getAuthStatus);
+  if (authStatus === AuthorizationStatus.Auth) {
+    return <Navigate to={AppRoute.Main} />;
+  }
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -28,17 +31,13 @@ function LoginPage(): JSX.Element {
     dispatch(loginAction(formData));
   };
 
-  if (authStatus === AuthorizationStatus.Auth) {
-    return <Navigate to={AppRoute.MAIN} />;
-  }
-
   return (
     <div className="page page--gray page--login">
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <Link className="header__logo-link" to={AppRoute.MAIN}>
+              <Link className="header__logo-link" to={AppRoute.Main}>
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
               </Link>
             </div>
@@ -54,13 +53,13 @@ function LoginPage(): JSX.Element {
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input className="login__input form__input" ref={emailRef}
-                  type="email" name="email" placeholder="Email" required
+                  type="email" name="email" placeholder="Email" required data-testid="email"
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
                 <input className="login__input form__input" ref={passwordRef}
-                  type="password" name="password" placeholder="Password" required
+                  type="password" name="password" placeholder="Password" required data-testid="password"
                 />
               </div>
               <button className="login__submit form__submit button" type="submit">Sign in

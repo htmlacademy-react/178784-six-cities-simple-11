@@ -4,8 +4,8 @@ import CityMap from '../city-map/city-map';
 import { useAppSelector } from '../../hooks';
 import { getActiveCity, getCurrentSort } from '../../store/offer-process/selectors';
 import { getOffers } from '../../store/offer-data/selectors';
-import { getSortFunction } from '../../services/sort';
-import { getPoints } from '../../services/helper';
+import { getSortFunction } from '../../utils/sort';
+import { getPoints } from '../../utils/helper';
 import { Nullable, Point } from '../../types/types';
 
 function CityPlaces(): Nullable<JSX.Element> {

@@ -10,8 +10,8 @@ import ReviewList from '../../components/review-list/review-list';
 import { HOTEL_TYPES, MAX_COMMENTS_COUNT } from '../../constants/const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AppRoute } from '../../router/app-routers';
-import { getOfferById } from '../../services/helper';
-import { sortComments } from '../../services/sort';
+import { getOfferById } from '../../utils/helper';
+import { sortComments } from '../../utils/sort';
 import { fetchNearOffersAction, fetchOfferCommentsAction } from '../../store/api-actions';
 import { getNearOffers, getOfferComments, getOffers } from '../../store/offer-data/selectors';
 import { getUser } from '../../store/user-process/selectors';
@@ -36,7 +36,8 @@ function RoomPage(): JSX.Element {
       dispatch(fetchOfferCommentsAction(offer.id));
       dispatch(fetchNearOffersAction(offer.id));
     }
-  }, [dispatch, id, offer.id]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   return (
     <div className="page">
@@ -44,7 +45,7 @@ function RoomPage(): JSX.Element {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <Link className="header__logo-link" to={AppRoute.MAIN}>
+              <Link className="header__logo-link" to={AppRoute.Main}>
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
               </Link>
             </div>

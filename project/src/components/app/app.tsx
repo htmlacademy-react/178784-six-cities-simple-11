@@ -4,8 +4,6 @@ import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import MainPage from '../../pages/main-page/main-page';
 import RoomPage from '../../pages/room-page/room-page';
 import { AppRoute } from '../../router/app-routers';
-import HistoryRouter from '../history-route/history-route';
-import browserHistory from '../../browser-history';
 import { useAppSelector } from '../../hooks';
 import { getIsLoading } from '../../store/offer-data/selectors';
 import { LoadingPage } from '../../pages/loading-page/loading-page';
@@ -22,27 +20,27 @@ function App(): JSX.Element {
   }
 
   return (
-    <HistoryRouter history={browserHistory}>
-      <Routes>
-        <Route
-          path={AppRoute.MAIN}
-          element={
-            <PrivateRoute authStatus={authStatus}>
-              <MainPage />
-            </PrivateRoute>
-          }
-        />
-        <Route path={AppRoute.LOGIN} element={<LoginPage />} />
-        <Route path={AppRoute.ROOM}
-          element={
-            <PrivateRoute authStatus={authStatus}>
-              <RoomPage />
-            </PrivateRoute>
-          }
-        />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </HistoryRouter>
+
+    <Routes>
+      <Route
+        path={AppRoute.Main}
+        element={
+          <PrivateRoute authStatus={authStatus}>
+            <MainPage />
+          </PrivateRoute>
+        }
+      />
+      <Route path={AppRoute.Login} element={<LoginPage />} />
+      <Route path={AppRoute.Room}
+        element={
+          <PrivateRoute authStatus={authStatus}>
+            <RoomPage />
+          </PrivateRoute>
+        }
+      />
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
+
   );
 }
 
