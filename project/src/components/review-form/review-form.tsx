@@ -1,5 +1,6 @@
 import { FormEvent, useState } from 'react';
-import { MAX_COMMENT_LENGTH } from '../../constants/const';
+import { toast } from 'react-toastify';
+import { LOW_COMMENT_LIMIT, MAX_COMMENT_LENGTH } from '../../constants/const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setCommentAction } from '../../store/api-actions';
 import { getIsCommentSending } from '../../store/offer-data/selectors';
@@ -40,8 +41,13 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
       rating: +formData.rating
     };
 
-    dispatch(setCommentAction([offerId, comment]));
-    setFormData({ rating: '', review: '' });
+    dispatch(setCommentAction([offerId, comment])).unwrap()
+      .then(() => {
+        setFormData({ rating: '', review: '' });
+      })
+      .catch(() => {
+        toast.error('Ошибка при отправке комментария');
+      });
   };
 
   return (
@@ -113,11 +119,11 @@ function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your
-          stay with at least <b className="reviews__text-amount">50 characters</b>.
+          stay with at least <b className="reviews__text-amount">{`${LOW_COMMENT_LIMIT } characters`}</b>.
         </p>
         <button className="reviews__submit form__submit button" type="submit"
           disabled={
-            formData.review.length <= 50 ||
+            formData.review.length <= LOW_COMMENT_LIMIT ||
             !formData.rating?.length ||
             isCommentSending
           }

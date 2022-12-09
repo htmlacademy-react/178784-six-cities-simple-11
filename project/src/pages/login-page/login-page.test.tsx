@@ -2,11 +2,10 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
-import HistoryRouter from '../../components/history-route/history-route';
+import HistoryRouter from '../../components/history-router/history-router';
 import { AuthorizationStatus } from '../../enums/authorization-status.enum';
 import LoginPage from './login-page';
 import userEvent from '@testing-library/user-event';
-
 
 describe('Component: LoginPage', () => {
   const mockStore = configureMockStore();

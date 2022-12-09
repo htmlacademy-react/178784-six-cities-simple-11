@@ -1,13 +1,15 @@
 import { SortType } from '../../enums/sort-type.enum';
 import { makeFakeCity, makeFakeOffer, makeFakeSort } from '../../mocks/mocks';
 import { OfferProcess } from '../../types/state';
-import { activeOfferChangeAction, changeActiveCityAction, changeSortAction, offerProcess, toggleSortOpenedAction } from './offer-process';
+import { getRandomCity } from '../../utils/helper';
+import { activeOfferChangeAction, changeActiveCityAction, changeSortAction, offerProcess, setDefaultCity, toggleSortOpenedAction } from './offer-process';
 
 const initialState: OfferProcess = {
   activeOfferId: null,
   activeCity: null,
   isSortOpened: false,
   currentSort: SortType.Pupular,
+  defaultCityName: null
 };
 
 describe('Reducer: offerProcess', () => {
@@ -44,5 +46,12 @@ describe('Reducer: offerProcess', () => {
     const sortType = makeFakeSort();
     expect(offerProcess.reducer(state, changeSortAction(sortType)))
       .toEqual({ ...initialState, currentSort: sortType });
+  });
+
+  it('should change default city', () => {
+    const state = { ...initialState };
+    const defaultCity = getRandomCity();
+    expect(offerProcess.reducer(state, setDefaultCity(defaultCity)))
+      .toEqual({ ...initialState, defaultCityName: defaultCity });
   });
 });

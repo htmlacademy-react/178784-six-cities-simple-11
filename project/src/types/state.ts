@@ -24,6 +24,7 @@ export type OfferProcess = {
   activeCity: Nullable<City>;
   isSortOpened: boolean;
   currentSort: SortType;
+  defaultCityName: Nullable<string>;
 }
 
 export type State = ReturnType<typeof store.getState>;

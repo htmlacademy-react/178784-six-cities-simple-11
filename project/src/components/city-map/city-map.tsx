@@ -6,8 +6,9 @@ import { Point, Location } from '../../types/types';
 import { activeIcon, defaultIcon } from '../../constants/const';
 import { useAppSelector } from '../../hooks';
 import { getActiveOfferId } from '../../store/offer-process/selectors';
+import L from 'leaflet';
 
-type CityMapProps = {
+export type CityMapProps = {
   points: Point[];
   center: Location;
 }
@@ -19,6 +20,7 @@ function CityMap({ points, center }: CityMapProps): JSX.Element {
 
   useEffect(() => {
     if (map) {
+      const markerGroup = L.layerGroup().addTo(map);
       points.forEach((point) => {
         leaflet
           .marker({
@@ -27,8 +29,11 @@ function CityMap({ points, center }: CityMapProps): JSX.Element {
           }, {
             icon: point.id === activeOfferId ? activeIcon : defaultIcon,
           })
-          .addTo(map);
+          .addTo(markerGroup);
       });
+      return () => {
+        markerGroup.clearLayers();
+      };
     }
   }, [map, points, activeOfferId]);
 

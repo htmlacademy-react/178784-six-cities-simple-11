@@ -11,7 +11,8 @@ import { redirectToRoute } from './action';
 import { AUTH_TOKEN_KEY_NAME } from '../services/token';
 import { makeFakeComment, makeFakeComments, makeFakeId, makeFakeOffers } from '../mocks/mocks';
 import { setAllCitiesAction, setNearOffersAction, setOfferCommentsAction } from './offer-data/offer-data';
-import { changeActiveCityAction } from './offer-process/offer-process';
+import { changeActiveCityAction, setDefaultCity } from './offer-process/offer-process';
+import { LoginData } from '../types/types';
 
 describe('Async actions', () => {
   const api = createApi();
@@ -53,11 +54,14 @@ describe('Async actions', () => {
 
     Storage.prototype.setItem = jest.fn();
 
-    await store.dispatch(loginAction(authData));
+    const loginData: LoginData = { authData, defaultCity: null };
+    await store.dispatch(loginAction(loginData));
 
     const actions = store.getActions().map(({ type }) => type);
     expect(actions).toEqual([
       loginAction.pending.type,
+      setDefaultCity.type,
+      fetchAllOffersAction.pending.type,
       redirectToRoute.type,
       loginAction.fulfilled.type
     ]);

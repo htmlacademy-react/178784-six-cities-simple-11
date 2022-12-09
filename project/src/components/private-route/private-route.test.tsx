@@ -3,7 +3,7 @@ import {createMemoryHistory} from 'history';
 import {render, screen} from '@testing-library/react';
 import {Provider} from 'react-redux';
 import {configureMockStore} from '@jedmao/redux-mock-store';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from '../history-router/history-router';
 import PrivateRoute from './private-route';
 import { AppRoute } from '../../router/app-routers';
 import { AuthorizationStatus } from '../../enums/authorization-status.enum';

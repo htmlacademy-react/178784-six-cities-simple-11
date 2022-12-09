@@ -3,7 +3,7 @@ import { createMemoryHistory } from 'history';
 import { HOTEL_TYPES } from '../../constants/const';
 import { makeFakeOffer } from '../../mocks/mocks';
 import { WithOfferProps } from '../../types/props';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from '../history-router/history-router';
 import NearOfferItem from './near-offer-item';
 
 describe('Near by offer component', () => {

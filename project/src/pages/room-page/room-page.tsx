@@ -17,6 +17,7 @@ import { getNearOffers, getOfferComments, getOffers } from '../../store/offer-da
 import { getUser } from '../../store/user-process/selectors';
 import PropertyMap from '../../components/property-map/property-map';
 import NearOfferItem from '../../components/near-offer-item/near-offer-item';
+import { RatingType } from '../../enums/rating-type.enum';
 
 function RoomPage(): JSX.Element {
   const { id } = useParams();
@@ -33,10 +34,14 @@ function RoomPage(): JSX.Element {
   const offer = getOfferById(allOffers, id);
 
   useEffect(() => {
-    if (offer) {
+    let isMounted = true;
+    if (isMounted && offer) {
       dispatch(fetchOfferCommentsAction(offer.id));
       dispatch(fetchNearOffersAction(offer.id));
     }
+    return () => {
+      isMounted = false;
+    };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
@@ -89,7 +94,7 @@ function RoomPage(): JSX.Element {
                   {offer.title}
                 </h1>
               </div>
-              <Rating rating={offer?.rating} isShowValue isReview={false} />
+              <Rating rating={offer?.rating} ratingType={RatingType.Property} />
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
                   {HOTEL_TYPES[offer.type]}

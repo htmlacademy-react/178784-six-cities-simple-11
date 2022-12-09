@@ -7,7 +7,7 @@ import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
-type PropertyMapProps = {
+export type PropertyMapProps = {
   currentOffer: Offer;
   nearOffers: Offer[];
 }

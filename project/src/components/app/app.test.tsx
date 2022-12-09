@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { AuthorizationStatus } from '../../enums/authorization-status.enum';
 import { makeFakeOffers, makeFakeCities, makeFakeUser, makeFakeComments, getFakeStoreCreator } from '../../mocks/mocks';
 import { AppRoute } from '../../router/app-routers';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from '../history-router/history-router';
 import App from './app';
 
 const history = createMemoryHistory();

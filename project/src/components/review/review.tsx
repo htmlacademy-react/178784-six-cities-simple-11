@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import { COMMENT_DATE_FORMAT } from '../../constants/const';
+import { RatingType } from '../../enums/rating-type.enum';
 import { Comment } from '../../types/types';
 import Rating from '../rating/rating';
 
@@ -22,7 +23,7 @@ function Review({ comment }: ReviewProps): JSX.Element {
         </span>
       </div>
       <div className="reviews__info">
-        <Rating rating={comment.rating} isShowValue={false} isReview />
+        <Rating rating={comment.rating} ratingType={RatingType.Review} />
         <p className="reviews__text">
           {comment.comment}
         </p>

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { HOTEL_TYPES } from '../../constants/const';
+import { RatingType } from '../../enums/rating-type.enum';
 import { useAppDispatch } from '../../hooks';
 import { activeOfferChangeAction } from '../../store/offer-process/offer-process';
 import { OfferProps } from '../../types/props';
@@ -27,7 +28,7 @@ function OfferItem({ offer }: OfferProps): JSX.Element {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
         </div>
-        <Rating rating={offer.rating} isShowValue={false} isReview={false}/>
+        <Rating rating={offer.rating} ratingType={RatingType.PlaceCard}/>
         <h2 className="place-card__name">
           <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
         </h2>

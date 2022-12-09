@@ -1,7 +1,9 @@
+import { random } from 'faker';
 import { toast } from 'react-toastify';
+import { CITY_ORDER } from '../constants/const';
 import { City, Nullable, Offer, Point } from '../types/types';
 
-export function getOfferById(offers: Offer[], id: string | undefined) : Nullable<Offer>{
+export function getOfferById(offers: Offer[], id: string | undefined): Nullable<Offer> {
   const offerIndex = offers.findIndex((o) => id && o.id === +id);
   if (offerIndex < 0) {
     const error = `Could not get offer by id: ${id ?? 'undefined'}`;
@@ -26,10 +28,9 @@ export function getPoint(offer: Offer): Point {
   return point;
 }
 
-const cityOrder = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 export function getAllCities(offers: Offer[]): City[] {
   const result: City[] = [];
-  for (const cityName of cityOrder) {
+  for (const cityName of CITY_ORDER) {
     const offer = offers.find((o) => o.city.name === cityName);
     if (!offer) {
       continue;
@@ -37,4 +38,22 @@ export function getAllCities(offers: Offer[]): City[] {
     result.push(offer.city);
   }
   return result;
+}
+
+const maxRating = 5;
+export function getWidthByRating(rating: number): number {
+  const res = Math.round(rating) / maxRating * 73;
+  return res;
+}
+
+
+const anyNumbersRegExp = new RegExp('.*[0-9].*');
+const anyLettersRegExp = new RegExp('.*[a-zA-Z].*');
+export function isValidPassword(password: string) {
+  return anyNumbersRegExp.test(password) &&
+    anyLettersRegExp.test(password);
+}
+
+export function getRandomCity() {
+  return random.arrayElement(CITY_ORDER);
 }

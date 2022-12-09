@@ -1,25 +1,26 @@
 import classNames from 'classnames';
-
-const maxRating = 5;
+import { RatingType } from '../../enums/rating-type.enum';
+import { getWidthByRating } from '../../utils/helper';
 
 export type RatingProps = {
   rating: number;
-  isShowValue: boolean;
-  isReview: boolean;
+  ratingType: RatingType;
 }
 
-function Rating({ rating, isShowValue, isReview }: RatingProps) {
+function Rating({ rating, ratingType }: RatingProps) {
   return (
     <div className={
-      classNames({ 'place-card__rating': !isReview },
-        { 'reviews__rating': isReview },
+      classNames({ 'place-card__rating': ratingType === RatingType.PlaceCard },
+        { 'reviews__rating': ratingType === RatingType.Review },
+        { 'property__rating': ratingType === RatingType.Property },
         'rating')
     }
     data-testid="rating-container"
     >
       <div className={
-        classNames({ 'place-card__stars': !isReview },
-          { 'reviews__stars': isReview },
+        classNames({ 'place-card__stars': ratingType === RatingType.PlaceCard },
+          { 'reviews__stars': ratingType === RatingType.Review },
+          { 'property__stars': ratingType === RatingType.Property },
           'rating__stars')
       }
       data-testid="rating-stars"
@@ -27,14 +28,9 @@ function Rating({ rating, isShowValue, isReview }: RatingProps) {
         <span style={{ width: getWidthByRating(rating) }}></span>
         <span className="visually-hidden">Rating</span>
       </div>
-      {isShowValue && <span className="property__rating-value rating__value" data-testid="rating">{rating}</span>}
+      {ratingType === RatingType.Property && <span className="property__rating-value rating__value" data-testid="rating">{rating}</span>}
     </div>
   );
-}
-
-function getWidthByRating(rating: number): number {
-  const res = Math.round(rating) / maxRating * 100;
-  return res;
 }
 
 export default Rating;
