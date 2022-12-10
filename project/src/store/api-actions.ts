@@ -4,12 +4,12 @@ import { APIRoute } from '../enums/api-route.enum';
 import { AppRoute } from '../router/app-routers';
 import { getAllCities } from '../utils/helper';
 import { dropToken, saveToken } from '../services/token';
-import { UserData } from '../types/auth-data';
+import { AuthData, UserData } from '../types/auth-data';
 import { AppDispatch, State } from '../types/state';
-import { Offer, Comment, NewComment, LoginData } from '../types/types';
+import { Offer, Comment, NewComment } from '../types/types';
 import { redirectToRoute } from './action';
 import { setAllCitiesAction, setNearOffersAction, setOfferCommentsAction } from './offer-data/offer-data';
-import { changeActiveCityAction, setDefaultCity } from './offer-process/offer-process';
+import { changeActiveCityAction } from './offer-process/offer-process';
 import { NameSpace } from '../enums/name-spaces.enum';
 
 export const fetchOfferCommentsAction = createAsyncThunk<void, number, {
@@ -58,12 +58,10 @@ export const fetchAllOffersAction = createAsyncThunk<Offer[], undefined, {
     const { data } = await api.get<Offer[]>(APIRoute.Offers);
     const allCities = getAllCities(data);
     dispatch(setAllCitiesAction(allCities));
-    const defaultCityName = getState()[NameSpace.OfferProcess]?.defaultCityName;
-    const defaultCity = allCities.find((city) => city.name === defaultCityName);
-    const activeCtiy = defaultCity ? defaultCity : allCities[0];
-    if (activeCtiy) {
-      dispatch(changeActiveCityAction(activeCtiy));
-    }
+    const activeCity = getState()[NameSpace.OfferProcess]?.activeCity
+      ?? allCities[0];
+
+    dispatch(changeActiveCityAction(activeCity));
 
     return data;
   }
@@ -81,17 +79,15 @@ export const checkAuthAction = createAsyncThunk<UserData, undefined, {
   }
 );
 
-export const loginAction = createAsyncThunk<UserData, LoginData, {
+export const loginAction = createAsyncThunk<UserData, AuthData, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'user/login',
-  async ({authData, defaultCity}, { dispatch, extra: api }) => {
+  async (authData, { dispatch, extra: api }) => {
     const { data: userData} = await api.post<UserData>(APIRoute.Login, authData);
     saveToken(userData.token);
-    dispatch(setDefaultCity(defaultCity));
-    dispatch(fetchAllOffersAction());
     dispatch(redirectToRoute(AppRoute.Main));
     return userData;
   }

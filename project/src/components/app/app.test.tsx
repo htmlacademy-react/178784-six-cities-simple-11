@@ -29,7 +29,8 @@ const fakeAuthApp = (
 );
 
 const noAuthStore = mockStoreCreator({
-  OFFER_DATA: { isLoading: false },
+  OFFER_PROCESS: { activeCity: cities[0] },
+  OFFER_DATA: { offers, cities, comments, nearOffers: offers },
   USER_PROCESS: {
     authStatus: AuthorizationStatus.NoAuth,
     user: null
@@ -83,17 +84,19 @@ describe('Application routing', () => {
     expect(screen.getByText('Перейти на главную')).toBeInTheDocument();
   });
 
-  it('shoud render "Login" if no auth navigate to Main', () => {
+  it('shoud render "Main" if no auth navigate to Main with "sing in" link', () => {
     history.push(AppRoute.Main);
     render(fakeNoAuthApp);
-    expect(screen.getAllByText(/sign in/i).length).toEqual(2);
+    expect(screen.getByText(/places to stay in/i)).toBeInTheDocument();
+    expect(screen.getByText(/Sign in/i)).toBeInTheDocument();
   });
 
-  it('shoud render "Login" if no auth navigate to Room', () => {
+  it('shoud render "Room" if no auth navigate to Room with "sing in" link', () => {
     history.push(`/offer/${offers[0].id}`);
 
     render(fakeNoAuthApp);
-    expect(screen.getAllByText(/sign in/i).length).toEqual(2);
+    expect(screen.getByText(/Other places in the neighbourhood/i)).toBeInTheDocument();
+    expect(screen.getByText(/Sign in/i)).toBeInTheDocument();
   });
 });
 

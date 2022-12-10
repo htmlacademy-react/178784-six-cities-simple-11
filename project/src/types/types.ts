@@ -1,4 +1,4 @@
-import { AuthData, UserData } from './auth-data';
+import { UserData } from './auth-data';
 
 export type Nullable<T> = T | null;
 
@@ -53,10 +53,4 @@ export type Comment = NewComment & {
   id: number;
   user: UserData;
 };
-
-export type LoginData = {
-  authData: AuthData;
-  defaultCity: Nullable<string>;
-}
-
 

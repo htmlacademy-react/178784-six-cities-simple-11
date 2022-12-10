@@ -10,9 +10,9 @@ type CityProps = {
 }
 
 function CityItem({ city }: CityProps): JSX.Element {
-  const dispatch = useAppDispatch();
   const activeCity = useAppSelector(getActiveCity);
   const isActive = city.name === activeCity?.name;
+  const dispatch = useAppDispatch();
   const handleClick = (evt: MouseEvent<HTMLAnchorElement>) => {
     evt.preventDefault();
     dispatch(changeActiveCityAction(city));

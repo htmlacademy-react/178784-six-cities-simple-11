@@ -9,7 +9,6 @@ import { getIsLoading } from '../../store/offer-data/selectors';
 import { LoadingPage } from '../../pages/loading-page/loading-page';
 import { getAuthStatus } from '../../store/user-process/selectors';
 import { AuthorizationStatus } from '../../enums/authorization-status.enum';
-import PrivateRoute from '../private-route/private-route';
 
 function App(): JSX.Element {
   const authStatus = useAppSelector(getAuthStatus);
@@ -22,22 +21,9 @@ function App(): JSX.Element {
   return (
 
     <Routes>
-      <Route
-        path={AppRoute.Main}
-        element={
-          <PrivateRoute authStatus={authStatus}>
-            <MainPage />
-          </PrivateRoute>
-        }
-      />
+      <Route path={AppRoute.Main} element={<MainPage />}/>
       <Route path={AppRoute.Login} element={<LoginPage />} />
-      <Route path={AppRoute.Room}
-        element={
-          <PrivateRoute authStatus={authStatus}>
-            <RoomPage />
-          </PrivateRoute>
-        }
-      />
+      <Route path={AppRoute.Room} element={<RoomPage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
 

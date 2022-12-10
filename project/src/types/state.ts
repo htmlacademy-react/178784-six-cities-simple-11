@@ -12,7 +12,6 @@ export type UserProcess = {
 export type OfferData = {
   offers: Offer[];
   cities: City[];
-  error: Nullable<string>;
   isLoading: boolean;
   comments: Comment[];
   isCommentSending: boolean;
@@ -24,7 +23,6 @@ export type OfferProcess = {
   activeCity: Nullable<City>;
   isSortOpened: boolean;
   currentSort: SortType;
-  defaultCityName: Nullable<string>;
 }
 
 export type State = ReturnType<typeof store.getState>;

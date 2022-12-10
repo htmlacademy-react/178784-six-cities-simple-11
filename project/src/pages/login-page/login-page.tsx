@@ -4,33 +4,36 @@ import { toast } from 'react-toastify';
 import { AuthorizationStatus } from '../../enums/authorization-status.enum';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AppRoute } from '../../router/app-routers';
+import { redirectToRoute } from '../../store/action';
 import { loginAction } from '../../store/api-actions';
+import { getCities } from '../../store/offer-data/selectors';
+import { changeActiveCityAction } from '../../store/offer-process/offer-process';
 import { getAuthStatus } from '../../store/user-process/selectors';
-import { LoginData, Nullable } from '../../types/types';
+import { AuthData } from '../../types/auth-data';
+import { Nullable } from '../../types/types';
 import { getRandomCity, isValidPassword } from '../../utils/helper';
 
 function LoginPage(): JSX.Element {
   const randomCity = getRandomCity();
+  const cities = useAppSelector(getCities);
   const emailRef = useRef<Nullable<HTMLInputElement>>(null);
   const passwordRef = useRef<Nullable<HTMLInputElement>>(null);
   const authStatus = useAppSelector(getAuthStatus);
   const dispatch = useAppDispatch();
+  dispatch(changeActiveCityAction(cities[0]));
   if (authStatus === AuthorizationStatus.Auth) {
     return <Navigate to={AppRoute.Main} />;
   }
 
-  const handleSubmit = (evt: FormEvent<HTMLElement>, defaultCity: Nullable<string> = null) => {
+  const handleSubmit = (evt: FormEvent<HTMLElement>) => {
     evt.preventDefault();
     if (emailRef.current !== null && passwordRef.current !== null) {
       if (isValidPassword(passwordRef.current.value)) {
-        const loginData: LoginData = {
-          authData: {
-            email: emailRef.current.value,
-            password: passwordRef.current.value
-          },
-          defaultCity
+        const authData: AuthData = {
+          email: emailRef.current.value,
+          password: passwordRef.current.value
         };
-        onSubmit(loginData);
+        onSubmit(authData);
       }
       else {
         toast.error('Password must have one latter or number');
@@ -38,8 +41,17 @@ function LoginPage(): JSX.Element {
     }
   };
 
-  const onSubmit = (loginData: LoginData) => {
-    dispatch(loginAction(loginData));
+  const handleLocationClick = (evt: FormEvent<HTMLElement>) => {
+    evt.preventDefault();
+    const newActiveCity = cities.find((city) => city.name === randomCity);
+    if (newActiveCity) {
+      dispatch(changeActiveCityAction(newActiveCity));
+    }
+    dispatch(redirectToRoute(AppRoute.Main));
+  };
+
+  const onSubmit = (authData: AuthData) => {
+    dispatch(loginAction(authData));
   };
 
   return (
@@ -79,7 +91,7 @@ function LoginPage(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="/#" onClick={(evt) => handleSubmit(evt, randomCity)}>
+              <a className="locations__item-link" href="/#" onClick={handleLocationClick}>
                 <span>{randomCity}</span>
               </a>
             </div>

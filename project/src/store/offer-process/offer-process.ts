@@ -9,7 +9,6 @@ const initialState: OfferProcess = {
   activeCity: null,
   isSortOpened: false,
   currentSort: SortType.Pupular,
-  defaultCityName: null
 };
 
 export const offerProcess = createSlice({
@@ -28,11 +27,8 @@ export const offerProcess = createSlice({
     changeSortAction: (state, action: PayloadAction<SortType>) => {
       state.currentSort = action.payload;
     },
-    setDefaultCity: (state, action: PayloadAction<Nullable<string>>) => {
-      state.defaultCityName = action.payload;
-    }
   }
 });
 
 export const { activeOfferChangeAction, changeActiveCityAction,
-  toggleSortOpenedAction, changeSortAction, setDefaultCity } = offerProcess.actions;
+  toggleSortOpenedAction, changeSortAction } = offerProcess.actions;
