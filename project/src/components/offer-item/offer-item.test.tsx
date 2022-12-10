@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { HOTEL_TYPES } from '../../constants/const';
 import { getFakeStoreCreator, makeFakeOffer } from '../../mocks/mocks';
 import { WithOfferProps } from '../../types/props';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from '../history-router/history-router';
 import OfferItem from './offer-item';
 
 describe('Offer item component', () => {

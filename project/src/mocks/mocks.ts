@@ -2,11 +2,13 @@ import { helpers, random } from 'faker';
 import { SortType } from '../enums/sort-type.enum';
 import { UserData } from '../types/auth-data';
 import { City, Comment, Host, Offer } from '../types/types';
-import { configureMockStore } from '@jedmao/redux-mock-store';
+import { configureMockStore, MockStoreCreator } from '@jedmao/redux-mock-store';
 import thunk, { ThunkDispatch } from 'redux-thunk';
 import { createApi } from '../services/api';
 import { Action } from '@reduxjs/toolkit';
 import { State } from 'history';
+import { RatingType } from '../enums/rating-type.enum';
+import MockAdapter from 'axios-mock-adapter';
 
 const CITY_1: City = {
   name: 'Cologne',
@@ -267,6 +269,8 @@ export const makeFakeOffer = (): Offer => helpers.randomize<Offer>([OFFER_1, OFF
 export const makeFakeCity = (): City => helpers.randomize<City>([CITY_1, CITY_2]);
 export const makeFakeHost = (isPro: boolean): Host => isPro ? HOST_1 : HOST_2;
 export const makeFakeSort = (): SortType => helpers.randomize<SortType>([SortType.PriceHithToLow, SortType.PriceLowToHigh, SortType.Pupular, SortType.TopRatedFirst]);
+export const makeFakeRatingType = (): RatingType => helpers.randomize<RatingType>([RatingType.PlaceCard,
+  RatingType.Property, RatingType.Review]);
 export const makeFakeComment = (): Comment => helpers.randomize<Comment>([COMMENT_1, COMMENT_2]);
 export const makeFakeUser = (): UserData => helpers.randomize<UserData>([USER_1, USER_2]);
 export const makeFakeText = (length: number) => random.alpha({count: length});
@@ -284,4 +288,18 @@ export const getFakeStoreCreator = () => {
     ThunkDispatch<State, typeof api, Action>
   >(middlewares);
   return creator;
+};
+
+export const getFakeStoreCreatorWithMockApi = (): [MockStoreCreator, MockAdapter] => {
+  const api = createApi();
+  const mockAPI = new MockAdapter(api);
+
+  const middlewares = [thunk.withExtraArgument(api)];
+
+  const creator = configureMockStore<
+    State,
+    Action<string>,
+    ThunkDispatch<State, typeof api, Action>
+  >(middlewares);
+  return [creator, mockAPI];
 };

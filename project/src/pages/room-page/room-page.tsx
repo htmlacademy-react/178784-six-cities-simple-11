@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import Host from '../../components/host/host';
 import IsPremium from '../../components/is-premium/is-premium';
 import PropertyGalery from '../../components/property-galery/property-galary';
@@ -14,64 +14,45 @@ import { getOfferById } from '../../utils/helper';
 import { sortComments } from '../../utils/sort';
 import { fetchNearOffersAction, fetchOfferCommentsAction } from '../../store/api-actions';
 import { getNearOffers, getOfferComments, getOffers } from '../../store/offer-data/selectors';
-import { getUser } from '../../store/user-process/selectors';
 import PropertyMap from '../../components/property-map/property-map';
 import NearOfferItem from '../../components/near-offer-item/near-offer-item';
+import { RatingType } from '../../enums/rating-type.enum';
+import Header from '../../components/header/header';
+import { getAuthStatus } from '../../store/user-process/selectors';
+import { AuthorizationStatus } from '../../enums/authorization-status.enum';
 
 function RoomPage(): JSX.Element {
   const { id } = useParams();
   const allOffers = useAppSelector(getOffers);
-  const user = useAppSelector(getUser);
+
   const allComments = useAppSelector(getOfferComments);
-  const offer = getOfferById(allOffers, id);
+  const authStatus = useAppSelector(getAuthStatus);
   const nearOffers = useAppSelector(getNearOffers);
   const comments = allComments
     .map((comment) => comment)
     .sort(sortComments)
     .slice(0, MAX_COMMENTS_COUNT);
   const dispatch = useAppDispatch();
+  const offer = getOfferById(allOffers, id);
 
   useEffect(() => {
-    if (id) {
+    let isMounted = true;
+    if (isMounted && offer) {
       dispatch(fetchOfferCommentsAction(offer.id));
       dispatch(fetchNearOffersAction(offer.id));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+    return () => {
+      isMounted = false;
+    };
+  }, [dispatch, id, offer]);
+
+  if (offer === null) {
+    return <Navigate to={AppRoute.NotFound}/>;
+  }
 
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Link className="header__logo-link" to={AppRoute.Main}>
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-              </Link>
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <div className="header__nav-profile">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                      <img className="reviews__avatar user__avatar" src={user.avatarUrl} width="20" height="20"
-                        alt={user.name}
-                      >
-                      </img>
-                    </div>
-                    <span className="header__user-name user__name">{user.name}</span>
-                  </div>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="/#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header/>
 
       <main className="page__main page__main--property">
         <section className="property">
@@ -84,7 +65,7 @@ function RoomPage(): JSX.Element {
                   {offer.title}
                 </h1>
               </div>
-              <Rating rating={offer?.rating} isShowValue isReview={false} />
+              <Rating rating={offer?.rating} ratingType={RatingType.Property} />
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
                   {HOTEL_TYPES[offer.type]}
@@ -105,7 +86,7 @@ function RoomPage(): JSX.Element {
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{allComments.length}</span></h2>
                 <ReviewList comments={comments} />
-                <ReviewForm offerId={offer.id} />
+                { authStatus === AuthorizationStatus.Auth ? <ReviewForm offerId={offer.id} /> : null}
               </section>
             </div>
           </div>

@@ -10,6 +10,7 @@ import { Offer, Comment, NewComment } from '../types/types';
 import { redirectToRoute } from './action';
 import { setAllCitiesAction, setNearOffersAction, setOfferCommentsAction } from './offer-data/offer-data';
 import { changeActiveCityAction } from './offer-process/offer-process';
+import { NameSpace } from '../enums/name-spaces.enum';
 
 export const fetchOfferCommentsAction = createAsyncThunk<void, number, {
   dispatch: AppDispatch;
@@ -29,7 +30,7 @@ export const setCommentAction = createAsyncThunk<void, [number, NewComment], {
   extra: AxiosInstance;
 }>(
   'data/setComment',
-  async ([offerId, comment], {dispatch, extra: api}) => {
+  async ([offerId, comment], {dispatch, extra: api, rejectWithValue}) => {
     const {data} = await api.post<Comment[]>(`${APIRoute.OfferComments}/${offerId}`, comment);
     dispatch(setOfferCommentsAction(data));
   }
@@ -53,13 +54,14 @@ export const fetchAllOffersAction = createAsyncThunk<Offer[], undefined, {
   extra: AxiosInstance;
 }>(
   'data/fetchAllOffers',
-  async (_args, { dispatch, extra: api }) => {
+  async (_args, { dispatch, extra: api, getState }) => {
     const { data } = await api.get<Offer[]>(APIRoute.Offers);
     const allCities = getAllCities(data);
     dispatch(setAllCitiesAction(allCities));
-    if (allCities.length) {
-      dispatch(changeActiveCityAction(allCities[0]));
-    }
+    const activeCity = getState()[NameSpace.OfferProcess]?.activeCity
+      ?? allCities[0];
+
+    dispatch(changeActiveCityAction(activeCity));
 
     return data;
   }
@@ -83,9 +85,8 @@ export const loginAction = createAsyncThunk<UserData, AuthData, {
   extra: AxiosInstance;
 }>(
   'user/login',
-  async ({ email, password }, { dispatch, extra: api }) => {
-    const data: AuthData = { email, password };
-    const { data: userData} = await api.post<UserData>(APIRoute.Login, data);
+  async (authData, { dispatch, extra: api }) => {
+    const { data: userData} = await api.post<UserData>(APIRoute.Login, authData);
     saveToken(userData.token);
     dispatch(redirectToRoute(AppRoute.Main));
     return userData;

@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { getFakeStoreCreator, makeFakeCity } from '../../mocks/mocks';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from '../history-router/history-router';
 import CityPlacesEmpty from './city-places-empty';
 
 describe('Citi places empty component', () => {

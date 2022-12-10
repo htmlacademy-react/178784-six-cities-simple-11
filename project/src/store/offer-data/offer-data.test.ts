@@ -5,7 +5,6 @@ import { offerData, setAllCitiesAction, setNearOffersAction, setOfferCommentsAct
 
 const initialState: OfferData = {
   offers: [],
-  error: null,
   isLoading: false,
   comments: [],
   isCommentSending: false,

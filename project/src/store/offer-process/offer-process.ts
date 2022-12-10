@@ -26,8 +26,9 @@ export const offerProcess = createSlice({
     },
     changeSortAction: (state, action: PayloadAction<SortType>) => {
       state.currentSort = action.payload;
-    }
+    },
   }
 });
 
-export const { activeOfferChangeAction, changeActiveCityAction, toggleSortOpenedAction, changeSortAction } = offerProcess.actions;
+export const { activeOfferChangeAction, changeActiveCityAction,
+  toggleSortOpenedAction, changeSortAction } = offerProcess.actions;

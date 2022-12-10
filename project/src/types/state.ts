@@ -12,7 +12,6 @@ export type UserProcess = {
 export type OfferData = {
   offers: Offer[];
   cities: City[];
-  error: Nullable<string>;
   isLoading: boolean;
   comments: Comment[];
   isCommentSending: boolean;

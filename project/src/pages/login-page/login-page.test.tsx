@@ -1,15 +1,20 @@
-import { configureMockStore } from '@jedmao/redux-mock-store';
 import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
-import HistoryRouter from '../../components/history-route/history-route';
+import HistoryRouter from '../../components/history-router/history-router';
 import { AuthorizationStatus } from '../../enums/authorization-status.enum';
 import LoginPage from './login-page';
 import userEvent from '@testing-library/user-event';
-
+import { getFakeStoreCreator, makeFakeCities } from '../../mocks/mocks';
 
 describe('Component: LoginPage', () => {
-  const mockStore = configureMockStore();
+  const cities = makeFakeCities();
+  const mockStoreCreator = getFakeStoreCreator();
+  const store = mockStoreCreator({
+    OFFER_DATA: { cities },
+    USER_PROCESS: { authStatus: AuthorizationStatus.Unknown }
+  });
+
   it('should render when user navigate to "login url"', async () => {
 
     Storage.prototype.setItem = jest.fn();
@@ -18,7 +23,7 @@ describe('Component: LoginPage', () => {
     history.push('/login');
 
     render(
-      <Provider store={mockStore({ USER_PROCESS: { authStatus: AuthorizationStatus.Unknown } })}>
+      <Provider store={store}>
         <HistoryRouter history={history}>
           <LoginPage />
         </HistoryRouter>);

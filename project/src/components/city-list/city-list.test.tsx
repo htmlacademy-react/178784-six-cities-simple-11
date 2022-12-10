@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { getFakeStoreCreator, makeFakeCities, makeFakeCity } from '../../mocks/mocks';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from '../history-router/history-router';
 import CityList from './city-list';
 
 describe('Citi list component', () => {

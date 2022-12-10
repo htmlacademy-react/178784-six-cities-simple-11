@@ -6,7 +6,6 @@ import { NameSpace } from '../../enums/name-spaces.enum';
 
 const initialState: OfferData = {
   offers: [],
-  error: null,
   isLoading: false,
   comments: [],
   isCommentSending: false,
